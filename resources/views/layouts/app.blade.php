@@ -1,3 +1,4 @@
+<!-- App Layout -->
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
     <head>
@@ -12,12 +13,22 @@
         <title>{{env("APP_NAME")}} - @yield("title")</title>
     </head>
     <body class="bg-gray-100">
+        <!-- Page navigation -->
         @include('layouts.navigation')
+
+        <!-- Page Heading -->
+        <header class="bg-white shadow">
+            <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+                {{ $header }}
+            </div>
+        </header>
+
+        <!-- The content of the page -->
         <main class="container w-screen h-screen mx-auto">
-            @yield('content')
+            {{ $slot }}
         </main>
-        <div class="bg-indigo-900 p-2 pl-6">
-            <p class="bottom text-white text-center md:text-left">© Copyright 2022 - ProSoft</p>
-        </div>
+
+        <!-- The footer of the page -->
+        @include('layouts.footer')
     </body>
 </html>

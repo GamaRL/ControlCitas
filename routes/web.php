@@ -15,4 +15,8 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('medicos.login');
-});
+})->name('home');
+
+Route::get('/login', function() {
+    return view('medicos.login');
+})->name('login');
