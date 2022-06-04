@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\PatientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
@@ -22,11 +23,15 @@ Route::get('/', function () {
 
 // Login routes
 Route::get('login', function() {
-    return view('doctors.login');
+    return view('login');
 })->name('login');
 
 // Doctors routes
 Route::resource('doctors', DoctorController::class)
+    ->only('create', 'store');
+
+// Patients routes
+Route::resource('patients', PatientController::class)
     ->only('create', 'store');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {

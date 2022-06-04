@@ -69,4 +69,11 @@ class User extends Authenticatable
             return $this->hasOne(Doctor::class);
         throw new UnsupportedOperationException("The user is not a Doctor.");
     }
+
+    public function patient() : HasOne
+    {
+        if ($this->getAttribute('type') === "patient")
+            return $this->hasOne(Patient::class);
+        throw new UnsupportedOperationException("The user is not a Patient.");
+    }
 }
