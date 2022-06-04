@@ -14,9 +14,21 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('medicos.login');
+    return view('doctors.register');
 })->name('home');
 
 Route::get('/login', function() {
-    return view('medicos.login');
+    return view('doctors.login');
 })->name('login');
+
+Route::get('/register', function() {
+    return view('doctors.register');
+})->name('register');
+
+Route::post('/register', [\App\Http\Controllers\DoctorController::class, 'store'])->name('doctor.store');
+
+Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
+    $request->fulfill();
+
+    return redirect('/home');
+})->middleware(['auth', 'signed'])->name('verification.verify');

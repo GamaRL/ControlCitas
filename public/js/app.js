@@ -2170,8 +2170,9 @@ __webpack_require__.r(__webpack_exports__);
 function addMenuListener() {
   document.getElementById("nav-button").addEventListener('click', function () {
     document.getElementById("nav-menu").classList.toggle('hidden');
+    document.getElementById("nav-close").classList.toggle("hidden");
+    document.getElementById("nav-hamburger").classList.toggle("hidden");
   });
-  console.log("Hola");
 }
 
 if (document.readyState === 'loading') {

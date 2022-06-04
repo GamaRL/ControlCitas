@@ -1,7 +1,15 @@
-@props(["name", "type" => "text"])
+@props(["name", "value" => "", "type" => "text"])
 
-<div class="flex flex-col w-full mx-1 my-3">
-    <label for="{{$name}}" class="hidden">Number</label>
-    <input type="{{$type}}" name="{{$name}}" id="{{$name}}" placeholder="{{$slot}}"
-           class="w-100 mt-2 py-3 px-3 rounded-lg bg-white border border-gray-400 dark:border-gray-700 text-gray-800 font-semibold focus:border-indigo-500 focus:outline-none">
+<div class="flex flex-col w-full my-2">
+    <label for="{{$name}}" class="block mb-2 text-sm font-medium text-gray-900">
+        {{$slot}}
+    </label>
+    <input
+        type="{{$type}}"
+        id="{{$name}}"
+        name="{{$name}}"
+        value="{{old($name)}}"
+        class="bg-gray-50 border border-gray-300 text-gray-900
+        text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
+        focus:outline-none block w-full p-2.5">
 </div>

@@ -1,14 +1,15 @@
 import './bootstrap';
 
 function addMenuListener() {
-    document
-        .getElementById("nav-button")
+    document.getElementById("nav-button")
         .addEventListener('click', () => {
-            document
-                .getElementById("nav-menu")
+            document.getElementById("nav-menu")
                 .classList.toggle('hidden');
+            document.getElementById("nav-close")
+                .classList.toggle("hidden");
+            document.getElementById("nav-hamburger")
+                .classList.toggle("hidden");
         });
-    console.log("Hola");
 }
 
 if (document.readyState === 'loading') {
