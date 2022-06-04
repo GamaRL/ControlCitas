@@ -6,7 +6,7 @@
             {{ __('Register of Patients' ) }}
         </h2>
     </x-slot>
-    <div class="container flex items-center justify-center h-full p-10">
+    <div class="container flex items-center justify-center min-h-full p-10">
         <div class="bordered shadow p-10 rounded overflow-hidden shadow-xl rounded bg-white hover:shadow-2xl xl:w-1/3 sm:w-2/3 w-full">
             <div class="flex justify-center">
                 <div class="rounded-full bg-indigo-800 text-white p-2">

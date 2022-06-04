@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
@@ -22,9 +23,10 @@ Route::get('/', function () {
 })->name('home');
 
 // Login routes
-Route::get('login', function() {
-    return view('login');
-})->name('login');
+Route::view('login', 'login')->name('login');
+
+Route::post('login', [AuthController::class, 'authenticate'])->name('authenticate');
+Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 // Doctors routes
 Route::resource('doctors', DoctorController::class)

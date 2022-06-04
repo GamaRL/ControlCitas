@@ -6,8 +6,8 @@
             {{ __('Welcome' ) }}
         </h2>
     </x-slot>
-    <div class="container flex flex-wrap items-center justify-center h-screen">
-        <div class="bordered shadow p-10 max-w-sm rounded overflow-hidden shadow-xl rounded bg-white relative hover:shadow-2xl">
+    <div class="container flex items-center justify-center min-h-screen">
+        <div class="bordered shadow p-10 rounded overflow-hidden shadow-xl rounded bg-white hover:shadow-2xl xl:w-1/3 sm:w-2/3 w-full">
             <div class="flex justify-center">
                 <div class="rounded-full bg-indigo-800 text-white p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
@@ -15,7 +15,9 @@
                     </svg>
                 </div>
             </div>
-            <form autocomplete="off">
+            <x-forms.errors :errors="$errors"></x-forms.errors>
+            <form autocomplete="off" method="POST" action="{{route('authenticate')}}">
+                @csrf
                 <x-forms.input name="email" type="email">
                     {{__('Email')}}
                 </x-forms.input>

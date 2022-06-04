@@ -38,6 +38,19 @@
                         {{__('Pricing')}}
                     </x-general.nav.link>
                 </li>
+                @auth
+                    <li>
+                        <x-general.nav.link :href="route('logout')">
+                            {{__('Logout')}}
+                        </x-general.nav.link>
+                    </li>
+                @else
+                    <li>
+                        <x-general.nav.link :href="route('login')">
+                            {{__('Login')}}
+                        </x-general.nav.link>
+                    </li>
+                @endauth
             </ul>
         </div>
     </div>
