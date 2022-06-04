@@ -16,7 +16,7 @@
                 </div>
             </div>
             <x-forms.errors :errors="$errors"></x-forms.errors>
-            <form autocomplete="off" class="mt-3 w-full" method="POST" action="{{route('doctor.store')}}">
+            <form autocomplete="off" class="mt-3 w-full" method="POST" action="{{route('doctors.store')}}">
                 @csrf
                 <h2 class="text-xs">{{__('Personal Information')}}:</h2>
                 <x-forms.input name="name" type="text">

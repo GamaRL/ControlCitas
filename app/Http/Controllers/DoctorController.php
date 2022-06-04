@@ -2,15 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Doctor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class DoctorController extends Controller
 {
+    public function create() : View
+    {
+        return view('doctors.register');
+    }
+
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -48,6 +53,7 @@ class DoctorController extends Controller
         ]);
 
         $user->sendEmailVerificationNotification();
+
         return redirect(route('home'));
     }
 }

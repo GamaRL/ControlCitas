@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\DoctorController;
+use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,19 +15,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+// Home route
 Route::get('/', function () {
-    return view('doctors.register');
+    return view('home');
 })->name('home');
 
-Route::get('/login', function() {
+// Login routes
+Route::get('login', function() {
     return view('doctors.login');
 })->name('login');
 
-Route::get('/register', function() {
-    return view('doctors.register');
-})->name('register');
-
-Route::post('/register', [\App\Http\Controllers\DoctorController::class, 'store'])->name('doctor.store');
+// Doctors routes
+Route::resource('doctors', DoctorController::class)
+    ->only('create', 'store');
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
