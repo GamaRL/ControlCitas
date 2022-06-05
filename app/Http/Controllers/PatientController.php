@@ -55,4 +55,18 @@ class PatientController extends Controller
 
         return redirect(route('home'));
     }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $user = User::find($id);
+        return view('shared.edit_profile')
+                ->with('profile','patients')
+                ->with('user',$user);
+    }
 }

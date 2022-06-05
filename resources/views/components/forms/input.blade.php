@@ -8,7 +8,7 @@
         type="{{$type}}"
         id="{{$name}}"
         name="{{$name}}"
-        value="{{old($name)}}"
+        value="{{old($name) != "" ? old($name) : $value}}"
         class="bg-gray-50 border border-gray-300 text-gray-900
         text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500
         focus:outline-none block w-full p-2.5">

@@ -37,11 +37,11 @@ Route::get('/email/verification-notification', [AuthController::class, 'resendVe
 
 // Doctors routes
 Route::resource('doctors', DoctorController::class)
-    ->only('create', 'store');
+    ->only('create', 'store','edit');
 
 // Patients routes
 Route::resource('patients', PatientController::class)
-    ->only('create', 'store');
+    ->only('create', 'store','edit');
 
 // Doctors-Schedule routes
 Route::get('doctors/schedules/all', [DoctorSchedulesController::class, 'all'])
