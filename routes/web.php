@@ -42,6 +42,8 @@ Route::get('doctors/schedules/all', [DoctorSchedulesController::class, 'all'])
     ->name('doctors.schedules.all');
 Route::resource('doctors.schedules', DoctorSchedulesController::class);
 
+Route::resource('appointments', AppointmentController::class)->only('index', 'create');
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
