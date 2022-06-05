@@ -10,6 +10,9 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
+use App\Mail\AppointmentConfirmationRequest;
+use Illuminate\Support\Facades\Mail;
+
 class AppointmentController extends Controller
 {
     /**
@@ -33,9 +36,10 @@ class AppointmentController extends Controller
             $patient = User::find($patient->user_id)->first();
             $result->patient = $patient->name." ".$patient->first_last_name." ".$patient->second_last_name;
             $schedule = Schedule::find($appointment->schedule_id)->first();
-            $result->day = $schedule->date;
+            $result->date = $schedule->date;
             $result->hour = $schedule->hour;
             $result->whose = "receptionist";
+            $result->id = $appointment->id;
             array_push($list, $result);
         }
         return view("appointments.list")->with("appointments", $list);
@@ -48,24 +52,7 @@ class AppointmentController extends Controller
      */
     public function create()
     {
-        $list = [];
-        $all = Appointment::all();
-        // TODO: Filtrar citas
-        $filtered = $all;
 
-        foreach ($filtered as $appointment) {
-            $result = new AppointmentResult();
-            $doctor = Doctor::find($appointment->id_doctor)->first();
-            $result->doctor = $doctor->name.$doctor->first_last_name.$doctor->second_last_name;
-            $patient = Patient::find($appointment->id_patient)->first();
-            $result->patient = $patient->name.$patient->first_last_name.$patient->second_last_name;
-            $schedule = Schedule::find($appointment->id_schedule)->first();
-            $result->day = $schedule->date;
-            $result->hour = $schedule->hour;
-            $result->whose = "patient";
-            array_push($list, $result);
-        }
-        return view("appointments.list")->with("appointments", $list);
     }
 
     /**
@@ -77,6 +64,24 @@ class AppointmentController extends Controller
     public function store(Request $request)
     {
         //
+    }
+
+    public function sendConfirmReminder($id){
+        $appointment = Appointment::find($id);
+        $patient = $appointment->patient->user;
+        $doctor = $appointment->doctor->user;
+        $schedule = $appointment->schedule;
+        $day = $schedule->date;
+        $hour = $schedule->hour;
+        Mail::To($patient->email)
+            ->send(new AppointmentConfirmationRequest(
+                $patient->name." ".$patient->first_last_name." ".$patient->second_last_name,
+                date('d-M-Y', strtotime($day)),
+                date('h a', strtotime($hour)),
+                $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name
+                )
+            );
+        return redirect(route('appointments.index'));
     }
 
     /**
@@ -126,9 +131,10 @@ class AppointmentController extends Controller
 }
 
 class AppointmentResult {
+    public $id;
     public $doctor;
     public $patient;
     public $whose;
-    public $day;
+    public $date;
     public $hour;
 }
