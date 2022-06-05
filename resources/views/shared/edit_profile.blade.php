@@ -18,10 +18,10 @@
             <x-forms.errors :errors="$errors"></x-forms.errors>
             <form autocomplete="off" class="mt-3 w-full" method="post" action="{{route($profile.'.store')}}">
                 @csrf
-                <x-forms.input name="email" type="email" value={{$user->email}}>
+                <x-forms.input name="email" type="email" value="{{$user->email}}">
                     {{__('Email')}}
                 </x-forms.input>
-                <x-forms.input name="telephone" type="tel" value={{$user->telephone}}>
+                <x-forms.input name="telephone" type="tel" value="{{$user->telephone}}">
                     {{__('Telephone Number')}}
                 </x-forms.input>
                 <x-forms.input name="current_password" type="password">
