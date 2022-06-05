@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('doctor_id')->references('id')->on('doctors');
             $table->date('date');
+            $table->time('hour');
             $table->timestamps();
         });
     }
