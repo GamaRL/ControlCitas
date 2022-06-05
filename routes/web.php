@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
+use App\Http\Controllers\DoctorSchedulesController;
 use App\Http\Controllers\PatientController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -36,8 +37,13 @@ Route::resource('doctors', DoctorController::class)
 Route::resource('patients', PatientController::class)
     ->only('create', 'store');
 
+// Doctors-Schedule routes
+Route::get('doctors/schedules/all', [DoctorSchedulesController::class, 'all'])
+    ->name('doctors.schedules.all');
+Route::resource('doctors.schedules', DoctorSchedulesController::class);
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 
-    return redirect('/home');
+    return redirect(route('home'));
 })->middleware(['auth', 'signed'])->name('verification.verify');

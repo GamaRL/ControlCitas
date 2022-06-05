@@ -23,22 +23,12 @@
                         {{__('Home')}}
                     </x-general.nav.link>
                 </li>
-                <li>
-                    <x-general.nav.link :href="route('home')">
-                        {{__('About')}}
-                    </x-general.nav.link>
-                </li>
-                <li>
-                    <x-general.nav.link :href="route('home')">
-                        {{__('Services')}}
-                    </x-general.nav.link>
-                </li>
-                <li>
-                    <x-general.nav.link :href="route('home')">
-                        {{__('Pricing')}}
-                    </x-general.nav.link>
-                </li>
                 @auth
+                    <li>
+                        <x-general.nav.link :href="route('doctors.schedules.all')" :active="request()->routeIs('doctors.schedules.show')">
+                            {{__('Schedules')}}
+                        </x-general.nav.link>
+                    </li>
                     <li>
                         <x-general.nav.link :href="route('logout')">
                             {{__('Logout')}}
@@ -46,7 +36,7 @@
                     </li>
                 @else
                     <li>
-                        <x-general.nav.link :href="route('login')">
+                        <x-general.nav.link :href="route('login')" :active="request()->routeIs('login')">
                             {{__('Login')}}
                         </x-general.nav.link>
                     </li>
