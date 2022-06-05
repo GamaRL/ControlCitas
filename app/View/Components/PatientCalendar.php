@@ -5,33 +5,30 @@ namespace App\View\Components;
 use App\Models\Doctor;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
+use DateTime;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
-use function Sodium\add;
+use Illuminate\View\View;
 
 class PatientCalendar extends Component
 {
-    private $doctor;
-    private $date;
+    private Doctor $doctor;
+    private DateTime $date;
 
     /**
      * Create a new component instance.
      *
-     * @return void
+     * @param Doctor $doctor
+     * @param int $add_weeks
      */
-    public function __construct($doctor, $date)
+    public function __construct(Doctor $doctor, int $addWeeks)
     {
         $this->doctor = $doctor;
-        $this->date = $date;
+        $this->date = Carbon::now()->addWeeks($addWeeks);
     }
 
-    /**
-     * Get the view / contents that represent the component.
-     *
-     * @return \Illuminate\Contracts\View\View|\Closure|string
-     */
-    public function render()
+    public function render() : View
     {
         $start_week = $this->date->copy()->startOfWeek(CarbonInterface::SUNDAY);
 

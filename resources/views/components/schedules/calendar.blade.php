@@ -28,9 +28,7 @@
                     </th>
                     @foreach($schedule as $day)
                         <td class="px-6 py-4 text-center">
-                            @if($day === null)
-                                ''
-                            @else
+                            @if($day !== null)
                                 <x-general.link href="/">
                                     Agendar
                                 </x-general.link>

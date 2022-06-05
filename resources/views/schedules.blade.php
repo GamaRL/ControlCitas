@@ -8,9 +8,10 @@
     </x-slot>
     <div class="container flex flex-wrap justify-center p-10">
         <div class="flex justify-start w-full">
+            <label>
                 <select>
                     @forelse($doctors as $doctor)
-                        <option :value="$doctor->id">
+                        <option value="{{$doctor->id}}">
                             {{$doctor->user->getAttribute('name')}}
                             {{$doctor->user->getAttribute('first_last_name')}}
                             {{$doctor->user->getAttribute('second_last_name')}}
@@ -19,7 +20,17 @@
                         <h2>{{__("There are no registered doctors.")}}</h2>
                     @endforelse
                 </select>
+            </label>
         </div>
-        <x-patient-calendar :doctor="$doctors->get(0)" :date="Carbon\Carbon::now()"></x-patient-calendar>
+        <div class="flex justify-between w-full my-3">
+            <x-general.link href="{!!route('doctors.schedules.all', ['doctor' => $doctor, 'add_weeks' => $add_weeks - 1])!!}">
+                {!! __('pagination.previous') !!}
+            </x-general.link>
+
+            <x-general.link href="{!!route('doctors.schedules.all', ['doctor' => $doctor, 'add_weeks' => $add_weeks + 1])!!}">
+                {!! __('pagination.next') !!}
+            </x-general.link>
+        </div>
+        <x-patient-calendar :doctor="$doctor" :addWeeks="$add_weeks"></x-patient-calendar>
     </div>
 </x-app-layout>
