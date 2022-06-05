@@ -14,21 +14,65 @@ use Illuminate\Support\Facades\Auth;
 use App\Mail\AppointmentConfirmationRequest;
 use Illuminate\Support\Facades\Mail;
 
+use \Datetime;
+
 class AppointmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $list = [];
-        $all = Appointment::all();
-        // TODO: Filtrar citas
-        $filtered = $all;
+    private function isUpcoming($day, $hour){
+        $date = new DateTime($day." ".$hour);
+        $now = new DateTime();
 
-        foreach ($filtered as $appointment) {
+        return $date >= $now;
+    } 
+    
+    public function index() {
+        $this->showList("all");
+    }
+
+    public function showList($filter)
+    {
+        $whose = Auth::user()->type;
+        $list = [];
+        $filteredByType = Appointment::all();
+        $filteredByTimeAndType = [];
+
+        
+
+        //Filter by type
+        if ($whose == "patient"){
+            $filteredByType = Appointment::where('patient_id', Auth::id())->get();
+        }
+        if ($whose == "doctor"){
+            $filteredByType = Appointment::where('doctor_id', Auth::id())->get();
+        }
+
+        //dd($filteredByType);
+        
+        $now = new Datetime();
+        $appointment = "";
+        //Filter by time        
+        $filteredByTimeAndType = $filteredByType;
+        if ($filter == "upcoming"){
+            $filteredByTimeAndType = [];
+            foreach ($filteredByType as $appointment) {
+                $dateAppointment = new Datetime($appointment->date." ".$appointment->hour);
+                if ( $dateAppointment >= $now ){
+                    array_push($filteredByTimeAndType, $appointment);
+                }
+            }
+        }
+        if ($filter == "last"){
+            $filteredByTimeAndType = [];
+            foreach ($filteredByType as $appointment) {
+                $dateAppointment = new Datetime($appointment->date." ".$appointment->hour);
+                if ( $dateAppointment < $now ){
+                    array_push($filteredByTimeAndType, $appointment);
+                }
+            }
+        }
+
+        // Preparing the result list
+        foreach ($filteredByTimeAndType as $appointment) {
             $result = new AppointmentResult();
             $doctor = Doctor::find($appointment->doctor_id)->user;
             $result->doctor = $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name;
@@ -40,7 +84,10 @@ class AppointmentController extends Controller
             $result->id = $appointment->id;
             array_push($list, $result);
         }
-        return view("appointments.list")->with("appointments", $list)->with('whose',Auth::user()->type);
+
+        
+
+        return view("appointments.list")->with("appointments", $list)->with('whose',$whose);
     }
 
     /**
