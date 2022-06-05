@@ -6,12 +6,11 @@
             {{ __('Doctor Schedules' ) }}
         </h1>
     </x-slot>
-    <div class="container flex flex-wrap justify-center">
+    <div class="container flex flex-wrap justify-center p-10">
         <div class="flex justify-start w-full">
-            <label>
                 <select>
                     @forelse($doctors as $doctor)
-                        <option>
+                        <option :value="$doctor->id">
                             {{$doctor->user->getAttribute('name')}}
                             {{$doctor->user->getAttribute('first_last_name')}}
                             {{$doctor->user->getAttribute('second_last_name')}}
@@ -20,7 +19,6 @@
                         <h2>{{__("There are no registered doctors.")}}</h2>
                     @endforelse
                 </select>
-            </label>
         </div>
         <x-patient-calendar :doctor="$doctors->get(0)" :date="Carbon\Carbon::now()"></x-patient-calendar>
     </div>

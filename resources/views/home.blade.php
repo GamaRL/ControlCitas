@@ -13,5 +13,6 @@
     </x-slot>
     <div class="container flex flex-wrap items-center justify-center h-screen">
         <h1 class="text-xl">Home</h1>
+
     </div>
 </x-app-layout>

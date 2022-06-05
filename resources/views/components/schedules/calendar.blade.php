@@ -27,7 +27,15 @@
                         {{$hour}}
                     </th>
                     @foreach($schedule as $day)
-                        <td class="px-6 py-4 text-center">{{$day === null ? '-' : 'Aquí'}}</td>
+                        <td class="px-6 py-4 text-center">
+                            @if($day === null)
+                                ''
+                            @else
+                                <x-general.link href="/">
+                                    Agendar
+                                </x-general.link>
+                            @endif
+                        </td>
                     @endforeach
                 </tr>
             @endforeach

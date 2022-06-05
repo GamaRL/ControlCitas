@@ -25,7 +25,7 @@
                 </li>
                 @auth
                     <li>
-                        <x-general.nav.link :href="route('doctors.schedules.all')" :active="request()->routeIs('doctors.schedules.show')">
+                        <x-general.nav.link :href="route('doctors.schedules.all')" :active="request()->routeIs('doctors.schedules.all')">
                             {{__('Schedules')}}
                         </x-general.nav.link>
                     </li>

@@ -16,7 +16,7 @@ use Ramsey\Uuid\Exception\UnsupportedOperationException;
 /**
  * This class represents a User of the system.
  */
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens, HasFactory, Notifiable;
 
