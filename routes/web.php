@@ -30,17 +30,17 @@ Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 
 // Doctors routes
 Route::resource('doctors', DoctorController::class)
-    ->only('create', 'store');
+    ->only('create', 'store','edit');
 
 // Patients routes
 Route::resource('patients', PatientController::class)
-    ->only('create', 'store');
+    ->only('create', 'store', 'edit');
+
+// Appointment routes
+Route::resource('appointments', 'App\Http\Controllers\AppointmentController')
+    ->only('index', 'create')->middleware("check.confirmed.email");
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
-
-// Appointment routes
-Route::resource('appointments', AppointmentController::class)->only('index', 'create');
-
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');

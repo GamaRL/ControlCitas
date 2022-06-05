@@ -10,14 +10,6 @@ use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class AppointmentResult {
-    public $doctor;
-    public $patient;
-    public $whose;
-    public $day;
-    public $hour;
-}
-
 class AppointmentController extends Controller
 {
     /**
@@ -131,4 +123,12 @@ class AppointmentController extends Controller
     {
         //
     }
+}
+
+class AppointmentResult {
+    public $doctor;
+    public $patient;
+    public $whose;
+    public $day;
+    public $hour;
 }
