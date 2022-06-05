@@ -9,6 +9,7 @@ use App\Models\Patient;
 use App\Models\Schedule;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Auth;
 
 use App\Mail\AppointmentConfirmationRequest;
 use Illuminate\Support\Facades\Mail;
@@ -29,20 +30,17 @@ class AppointmentController extends Controller
 
         foreach ($filtered as $appointment) {
             $result = new AppointmentResult();
-            $doctor = Doctor::find($appointment->doctor_id)->first();
-            $doctor = User::find($doctor->user_id)->first();
+            $doctor = Doctor::find($appointment->doctor_id)->user;
             $result->doctor = $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name;
-            $patient = Patient::find($appointment->patient_id)->first();
-            $patient = User::find($patient->user_id)->first();
+            $patient = Patient::find($appointment->patient_id)->user;
             $result->patient = $patient->name." ".$patient->first_last_name." ".$patient->second_last_name;
-            $schedule = Schedule::find($appointment->schedule_id)->first();
+            $schedule = Schedule::find($appointment->schedule_id);
             $result->date = $schedule->date;
             $result->hour = $schedule->hour;
-            $result->whose = "receptionist";
             $result->id = $appointment->id;
             array_push($list, $result);
         }
-        return view("appointments.list")->with("appointments", $list);
+        return view("appointments.list")->with("appointments", $list)->with('whose',Auth::user()->type);
     }
 
     /**
@@ -77,7 +75,7 @@ class AppointmentController extends Controller
             ->send(new AppointmentConfirmationRequest(
                 $patient->name." ".$patient->first_last_name." ".$patient->second_last_name,
                 date('d-M-Y', strtotime($day)),
-                date('h a', strtotime($hour)),
+                date('h:i a', strtotime($hour)),
                 $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name
                 )
             );
@@ -134,7 +132,6 @@ class AppointmentResult {
     public $id;
     public $doctor;
     public $patient;
-    public $whose;
     public $date;
     public $hour;
 }
