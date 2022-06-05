@@ -8,7 +8,7 @@
     </x-slot>
     <div style="width:100%">
         @foreach ($appointments as $appointment)
-            <div style="width: 100%">
+            <div class="w-full">
                 <div style="width:20%">
                     {{$appointment->day}} <br>
                     {{$appointment->hour}}
@@ -26,7 +26,7 @@
                 <div style="width:25%">
                     <button type="button" class="md:w-32 bg-orange-800 hover:bg-orange-dark text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-orange-500 transition ease-in-out duration-300">
                         __('Send confirm reminder')
-                    </button>     
+                    </button>
                     <button type="button" class="md:w-32 bg-orange-800 hover:bg-orange-dark text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-orange-500 transition ease-in-out duration-300">
                         __('Cancel appointment')
                     </button>
