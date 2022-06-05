@@ -40,10 +40,7 @@ Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $requ
     $request->fulfill();
 
 // Appointment routes
-// PENDIENTE
-Route::get('appointments', function () {
-    return view('home');
-})->name('home');
+Route::resource('appointments', AppointmentController::class)->only('index', 'create');
 
     return redirect('/home');
 })->middleware(['auth', 'signed'])->name('verification.verify');

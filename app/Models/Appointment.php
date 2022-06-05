@@ -8,4 +8,27 @@ use Illuminate\Database\Eloquent\Model;
 class Appointment extends Model
 {
     use HasFactory;
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array<int, string>
+     */
+    protected $fillable = [
+        'doctor_id',
+        'patient_id',
+        'schedule_id',
+        'remarks',
+        'treatment',
+        'confirmed_at'
+    ];
+
+    /**
+     * The attributes that should be cast.
+     *
+     * @var array<string, string>
+     */
+    protected $casts = [
+        'confirmed_at' => 'datetime',
+    ];
 }
