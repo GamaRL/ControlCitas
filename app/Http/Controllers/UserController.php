@@ -69,6 +69,6 @@ class UserController extends Controller
         if (!ctype_space($request->input('new_password')))
             $user->password = Hash::make($request->input('new_password'));
         $user->save();
-        return redirect(route('home'));
+        return redirect(route('profile.view'));
     }
 }

@@ -16,7 +16,7 @@
                             {{$s_doctor->user->getAttribute('first_last_name')}}
                             {{$s_doctor->user->getAttribute('second_last_name')}}
                             /
-                            {{__($doctor->speciality)}}
+                            {{__($s_doctor->speciality)}}
                         </option>
                     @empty
                         <h2>{{__("There are no registered doctors.")}}</h2>

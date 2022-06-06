@@ -10,11 +10,11 @@
             </div>
             <div class="flex">
                 <a href="{{route("appointments.index", ['filter' => 'all'])}}"
-                   class="bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                   class="mr-2 bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                     {{ __('All')}}
                 </a>
                 <a href="{{route("appointments.index", ['filter' => 'upcoming'])}}"
-                   class="bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                   class="mr-2 bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                     {{ __('Upcoming')}}
                 </a>
                 <a href="{{route("appointments.index", ['filter' => 'last'])}}"

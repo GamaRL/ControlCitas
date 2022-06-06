@@ -35,7 +35,7 @@
                         </x-general.nav.link>
                     </li>
                     <li>
-                        <x-general.nav.link :href="route('profile.view')">
+                        <x-general.nav.link :href="route('profile.view')" :active="request()->routeIs('profile.*')">
                             {{__('Profile')}}
                         </x-general.nav.link>
                     </li>

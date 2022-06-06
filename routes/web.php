@@ -39,15 +39,15 @@ Route::get('/email/verification-notification', [AuthController::class, 'resendVe
 // Profile routes
 Route::get('profile', [UserController::class, 'index'])
     ->name('profile.view')
-    ->middleware(['auth','verified']);
+    ->middleware(['auth']);
 
 Route::get('profile/edit', [UserController::class, 'edit'])
     ->name('profile.edit')
-    ->middleware(['auth','verified']);
+    ->middleware(['auth']);
 
 Route::put('profile/update', [UserController::class, 'update'])
 ->name('profile.update')
-->middleware(['auth','verified']);
+->middleware(['auth']);
 
 // Doctors routes
 Route::resource('doctors', DoctorController::class)

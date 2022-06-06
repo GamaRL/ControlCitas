@@ -9,7 +9,7 @@
                 </h2>
             </div>
             <div class="w-1/6">
-                <a href="{{route("appointments.index")}}"
+            <a href="{{url()->previous()}}"
                     class="bg-orange-800 hover:bg-orange-dark text-white font-bold py-2 px-4 rounded-lg hover:bg-orange-500 transition ease-in-out duration-300 text-xs">
                     {{ __('Back')}}
                 </a>
@@ -65,6 +65,18 @@
                             {{__($appointment->doctor->professional_license)}}
                         </dd>
                     </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">{{__('Email')}}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {{__($appointment->doctor->user->email)}}
+                        </dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">{{__('Telephone Number')}}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {{__($appointment->doctor->user->telephone)}}
+                        </dd>
+                    </div>
                 </dl>
             </div>
 
@@ -91,6 +103,18 @@
                         <dt class="text-sm font-medium text-gray-500">C.U.R.P.</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
                             {{$appointment->patient->curp}}
+                        </dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">{{__('Email')}}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {{__($appointment->patient->user->email)}}
+                        </dd>
+                    </div>
+                    <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                        <dt class="text-sm font-medium text-gray-500">{{__('Telephone Number')}}</dt>
+                        <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                            {{__($appointment->patient->user->telephone)}}
                         </dd>
                     </div>
                 </dl>

@@ -30,10 +30,10 @@
                         <td class="px-6 py-4 text-center">
                             @if($day !== null)
                                 @if($day->appointment === null)
-                                <x-general.link href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $day])!!}">
-                                    Agendar
-                                </x-general.link>
-                                    @else
+                                    <x-general.link href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $day])!!}">
+                                        Agendar
+                                    </x-general.link>
+                                @else
                                     <x-general.link href="{{route('appointments.show', [$day->appointment])}}">
                                         Ver mi cita
                                     </x-general.link>

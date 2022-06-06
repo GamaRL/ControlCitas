@@ -42,6 +42,8 @@ class PatientCalendar extends Component
                 $hour_schedule = Collection::make();
                 for ($i = 0; $i < 7; $i++) {
                     $date = $start_week->copy()->addDays($i);
+
+
                     $hours = $this->doctor->schedules()
                         ->where('date', $date->format('Y-m-d'))
                         ->where('hour', $hour . ':' . $minute)
@@ -50,6 +52,8 @@ class PatientCalendar extends Component
                     if ($hours !== null && $hours->appointment === null) {
                         if ((new Carbon($hours->getAttribute('date')))->isAfter(Carbon::now()))
                             $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => $hours]));
+                        else
+                            $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => null]));
                     }
                     else if ($hours !== null && $hours->appointment->patient->user->id === Auth::id())
                         $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => $hours]));
