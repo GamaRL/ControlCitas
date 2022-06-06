@@ -50,7 +50,7 @@ Route::get('doctors/schedules/all', [DoctorSchedulesController::class, 'all'])
 Route::resource('doctors.schedules', DoctorSchedulesController::class);
 
 Route::resource('appointments', AppointmentController::class)
-    ->only('index', 'create')
+    ->only('index', 'create', 'store')
     ->middleware(['auth','verified']);
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {

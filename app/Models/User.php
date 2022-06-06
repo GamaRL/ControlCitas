@@ -6,6 +6,7 @@ use Illuminate\Auth\Notifications\VerifyEmail;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Messages\MailMessage;
@@ -75,5 +76,15 @@ class User extends Authenticatable implements MustVerifyEmail
         if ($this->getAttribute('type') === "patient")
             return $this->hasOne(Patient::class);
         throw new UnsupportedOperationException("The user is not a Patient.");
+    }
+
+    public function appointments() : HasMany
+    {
+        if ($this->getAttribute('type') === "patient")
+            return $this->patient->hasMany(Appointment::class);
+        elseif ($this->getAttribute('type') === "doctor")
+            return $this->doctor->hasMany(Appointment::class);
+
+        throw new UnsupportedOperationException('This user cannot have Appointments');
     }
 }

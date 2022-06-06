@@ -18,9 +18,10 @@ return new class extends Migration
             $table->foreignId('doctor_id')->references('id')->on('doctors');
             $table->foreignId('patient_id')->references('id')->on('patients');
             $table->foreignId('schedule_id')->references('id')->on('schedules');
-            $table->string('remarks', 500);
-            $table->string('treatment', 500);
-            $table->date('confirmed_at');
+            $table->string('reason', 500)->nullable();
+            $table->string('remarks', 500)->nullable();
+            $table->string('treatment', 500)->nullable();
+            $table->date('confirmed_at')->nullable();
             $table->timestamps();
         });
     }

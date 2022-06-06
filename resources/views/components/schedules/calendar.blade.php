@@ -1,4 +1,4 @@
-@props(['week_schedule', 'start_week'])
+@props(['week_schedule', 'start_week', 'doctor'])
 
 <div class="container">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
@@ -29,9 +29,15 @@
                     @foreach($schedule as $day)
                         <td class="px-6 py-4 text-center">
                             @if($day !== null)
-                                <x-general.link href="/">
+                                @if($day->appointment === null)
+                                <x-general.link href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $day])!!}">
                                     Agendar
                                 </x-general.link>
+                                    @else
+                                    <x-general.link href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $day])!!}">
+                                        Ver mi cita
+                                    </x-general.link>
+                                @endif
                             @endif
                         </td>
                     @endforeach

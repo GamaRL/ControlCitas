@@ -3,10 +3,12 @@
 namespace App\View\Components;
 
 use App\Models\Doctor;
+use App\Models\User;
 use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
 use Illuminate\View\View;
@@ -45,7 +47,11 @@ class PatientCalendar extends Component
                         ->where('hour', $hour . ':' . $minute)
                         ->first();
 
-                    if ($hours !== null && $hours->appointment === null)
+                    if ($hours !== null && $hours->appointment === null) {
+                        if ((new Carbon($hours->getAttribute('date')))->isAfter(Carbon::now()))
+                            $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => $hours]));
+                    }
+                    else if ($hours !== null && $hours->appointment->patient->user->id === Auth::id())
                         $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => $hours]));
                     else
                         $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => null]));
@@ -61,6 +67,6 @@ class PatientCalendar extends Component
             return [$item['hour'] => $item['schedules']];
         });
 
-        return view('components.schedules.calendar', ['week_schedule' => $week_schedule, 'start_week' => $start_week]);
+        return view('components.schedules.calendar', ['week_schedule' => $week_schedule, 'start_week' => $start_week, 'doctor' => $this->doctor]);
     }
 }

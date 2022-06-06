@@ -6,7 +6,7 @@
             {{ __('Doctor Schedules' ) }}
         </h1>
     </x-slot>
-    <div class="container flex flex-wrap justify-center p-10">
+    <div class="container flex flex-wrap justify-center lg:p-10">
         <div class="flex justify-start w-full">
             <label>
                 <select>
