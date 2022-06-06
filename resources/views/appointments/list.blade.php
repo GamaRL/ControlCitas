@@ -54,23 +54,22 @@
                            class="bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                             {{ __('Send confirm reminder')}}
                         </a>
-                        <button type="button"
-                           class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
-                            {{ __('Cancel appointment')}}
-                        </button>
                     @endif
                     @if ($whose == "patient")
                         @if ($appointment->confirmed_at === null)
-                            <button type="button" class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
-                                <a href="{{route('appointments.confirm', ['id' => $appointment->id])}}">{{ __('Confirm Appointment')}}</a>
-                            </button>
+                            <a class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs"
+                                 href="{{route('appointments.confirm', ['id' => $appointment->id])}}">{{ __('Confirm Appointment')}}
+                            </a>
+                            <a href="{{route('appointments.destroy', ['id' => $appointment->id])}}"
+                                class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                                 {{ __('Cancel appointment')}}
+                             </a>
                         @else
                             &#10004;&nbsp;{{__("CONFIRMED")}}
                         @endif
                     @endif
-                    <button type="button" class="bg-teal-800 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
-                        <a href="{{route('appointments.show', [$appointment])}}">{{ __('Show More')}}</a>
-                    </button>
+                    <a class="bg-teal-800 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs"
+                     href="{{route('appointments.show', [$appointment])}}">{{ __('Show More')}}</a>
                 </div>
             </div>
         @empty

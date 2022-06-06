@@ -157,6 +157,10 @@ class AppointmentController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $appointment = Appointment::find($id);
+        if($appointment !== null && $appointment->patient->user->id == Auth::id()) {
+            $appointment->delete();
+        }
+        return redirect(route('appointments.index'));
     }
 }
