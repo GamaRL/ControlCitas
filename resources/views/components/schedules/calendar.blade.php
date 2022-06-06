@@ -34,7 +34,7 @@
                                     Agendar
                                 </x-general.link>
                                     @else
-                                    <x-general.link href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $day])!!}">
+                                    <x-general.link href="{{route('appointments.show', [$day->appointment])}}">
                                         Ver mi cita
                                     </x-general.link>
                                 @endif
