@@ -60,6 +60,10 @@ Route::get('appointments/sendConfirmReminder/{id}', [AppointmentController::clas
 Route::get('appointments/list/{filter}', [AppointmentController::class, 'showList'])
     ->name('appointments.list')
     ->middleware(['auth','verified']);
+    
+Route::get('appointments/details/{id}', [AppointmentController::class, 'showDetails'])
+    ->name('appointments.details')
+    ->middleware(['auth','verified']);
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();

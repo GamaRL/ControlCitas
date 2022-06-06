@@ -29,6 +29,16 @@ class AppointmentController extends Controller
         $this->showList("all");
     }
 
+    public function showDetails($id){        
+        $whose = Auth::user()->type;
+        $appointment = Appointment::find($id);
+        //dd($appointment);
+        if(Auth::id() != $appointment->patient->id){
+            return redirect(route("appointments.list", ["filter" => "all"]));
+        }
+        return view("appointments.details")->with("appointment", $appointment)->with('whose',$whose);
+    }
+
     public function showList($filter)
     {
         $whose = Auth::user()->type;
@@ -61,7 +71,7 @@ class AppointmentController extends Controller
                 }
             }
         }
-        if ($filter == "last"){
+        elseif ($filter == "last"){
             $filteredByTimeAndType = [];
             foreach ($filteredByType as $appointment) {
                 $dateAppointment = new Datetime($appointment->date." ".$appointment->hour);
@@ -69,6 +79,9 @@ class AppointmentController extends Controller
                     array_push($filteredByTimeAndType, $appointment);
                 }
             }
+        }
+        else {
+            $filter = "all";
         }
 
         // Preparing the result list
@@ -87,7 +100,9 @@ class AppointmentController extends Controller
 
         
 
-        return view("appointments.list")->with("appointments", $list)->with('whose',$whose);
+        return view("appointments.list")->with("appointments", $list)
+            ->with('whose',$whose)
+            ->with('filter', $filter);
     }
 
     /**
