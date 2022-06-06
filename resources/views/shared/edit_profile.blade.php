@@ -16,7 +16,7 @@
                 </div>
             </div>
             <x-forms.errors :errors="$errors"></x-forms.errors>
-            <form autocomplete="off" class="mt-3 w-full" method="POST" action="{{route($profile.'.update')}}">
+            <form autocomplete="off" class="mt-3 w-full" method="POST" action="{{route('profile.update')}}">
                 @csrf
                 @method('put')
                 <x-forms.input name="email" type="email" value="{{$user->email}}">
@@ -34,8 +34,13 @@
                 <x-forms.input name="new_password_confirmation" type="password">
                     {{__('Confirm New Password')}}
                 </x-forms.input>
-                <div>
+                <div class="flex justify-between rounded-lg items-center">
                     <x-general.button>{{__('Save Changes')}}</x-general.button>
+                    <button class="text-white md:w-32 bg-red-800 hover:bg-red-dark text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-red-500 transition ease-in-out duration-300">
+                        <a href="{{route('home')}}">
+                                {{__('Cancel')}}
+                        </a>
+                    </button>
                 </div>
             </form>
         </div>

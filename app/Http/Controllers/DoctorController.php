@@ -57,25 +57,4 @@ class DoctorController extends Controller
 
         return redirect(route('home'));
     }
-
-    public function edit()
-    {
-        $id = Auth::id();
-        $user = User::find($id);
-        if($user == null)
-            return redirect(route('home'));
-        return view('shared.edit_profile')
-                ->with('profile','doctors')
-                ->with('user',$user);
-    }
-
-    public function update(Request $request){
-        $id = Auth::id();
-        $user = User::find($id);
-        if($user == null){
-            $user->email = $request->get("email");
-            $user->telephone = $request->get("telephone");
-        }
-        return redirect(route('home'));
-    }
 }

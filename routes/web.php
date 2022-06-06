@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DoctorController;
 use App\Http\Controllers\DoctorSchedulesController;
 use App\Http\Controllers\PatientController;
+use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
 
@@ -37,7 +38,15 @@ Route::get('/email/verification-notification', [AuthController::class, 'resendVe
 
 // Doctors routes
 Route::resource('doctors', DoctorController::class)
-    ->only('create', 'store','edit','update');
+    ->only('create', 'store');
+
+Route::get('profile/edit', [UserController::class, 'edit'])
+    ->name('profile.edit')
+    ->middleware(['auth','verified']);
+
+Route::put('profile/update', [UserController::class, 'update'])
+->name('profile.update')
+->middleware(['auth','verified']);
 
 // Patients routes
 Route::resource('patients', PatientController::class)
