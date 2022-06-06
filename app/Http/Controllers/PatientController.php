@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\View\View;
 
 class PatientController extends Controller
 {
@@ -59,10 +60,10 @@ class PatientController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param $id
+     * @return View
      */
-    public function edit($id)
+    public function edit(int $id) : View
     {
         $user = User::find($id);
         return view('shared.edit_profile')

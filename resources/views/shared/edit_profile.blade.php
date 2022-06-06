@@ -3,7 +3,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Edit Information' ) }}
+            {{ __('Edit Profile' ) }}
         </h2>
     </x-slot>
     <div class="container flex items-center justify-center min-h-full p-10">
@@ -25,6 +25,9 @@
                 <x-forms.input name="telephone" type="tel" value="{{$user->telephone}}">
                     {{__('Telephone Number')}}
                 </x-forms.input>
+                <span class="text-xl w-full border-b-2 border-gray-300">
+                    {{__('Change Password')}}
+                </span>
                 <x-forms.input name="current_password" type="password">
                     {{__('Current Password')}}
                 </x-forms.input>
@@ -34,13 +37,13 @@
                 <x-forms.input name="new_password_confirmation" type="password">
                     {{__('Confirm New Password')}}
                 </x-forms.input>
-                <div class="flex justify-between rounded-lg items-center">
-                    <x-general.button>{{__('Save Changes')}}</x-general.button>
-                    <button class="text-white md:w-32 bg-red-800 hover:bg-red-dark text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-red-500 transition ease-in-out duration-300">
-                        <a href="{{route('home')}}">
-                                {{__('Cancel')}}
-                        </a>
+                <div class="flex justify-center rounded-lg items-center">
+                    <button class="text-white bg-indigo-800 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg mt-3 transition ease-in-out duration-300">
+                        {{__('Save Changes')}}
                     </button>
+                    <a href="{{route('profile.view')}}" class="ml-2 text-white bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg mt-3 transition ease-in-out duration-300">
+                        {{__('Cancel')}}
+                    </a>
                 </div>
             </form>
         </div>

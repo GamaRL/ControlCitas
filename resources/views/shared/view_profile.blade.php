@@ -3,7 +3,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('View Information' ) }}
+            {{ __('View Profile' ) }}
         </h2>
     </x-slot>
     <div class="container flex items-center justify-center min-h-full p-10">
@@ -46,11 +46,14 @@
                     {{__('Birth')}}
                 </x-forms.input>
             @endif
-            <a href="{{route('home')}}">
-                <button class="text-white md:w-32 bg-red-800 hover:bg-red-dark text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-red-500 transition ease-in-out duration-300">
-                        {{__('Back')}}
-                </button>
-            </a>
+            <div class="flex justify-center">
+                <a href="{{route('home')}}" class="text-white bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg mt-3 transition ease-in-out duration-300">
+                    {{__('Back')}}
+                </a>
+                <a href="{{route('profile.edit')}}" class="ml-2 text-white bg-indigo-800 hover:bg-indigo-500 text-white font-bold py-2 px-4 rounded-lg mt-3 transition ease-in-out duration-300">
+                    {{__('Edit')}}
+                </a>
+            </div>
         </div>
     </div>
 </x-app-layout>
