@@ -39,7 +39,7 @@
                     </div>
                 </div>
                 <div class="w-full lg:w-1/2 p-10">
-                    <x-forms.textarea name="Reason" rows="7">{{__('Reason')}}:</x-forms.textarea>
+                    <x-forms.textarea name="reason" rows="7">{{__('Reason')}}:</x-forms.textarea>
                     <x-general.button>{{__('Send')}}</x-general.button>
                 </div>
             </div>

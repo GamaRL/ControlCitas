@@ -21,7 +21,8 @@ class Appointment extends Model
         'schedule_id',
         'remarks',
         'treatment',
-        'confirmed_at'
+        'confirmed_at',
+        'reason',
     ];
 
     /**
