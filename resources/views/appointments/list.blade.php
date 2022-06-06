@@ -2,36 +2,79 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Appointments' ) }} ({{count($appointments)}})
-        </h2>
+        <div class="w-full flex justify-between rounded-lg items-center mt-3 py-3 px-3">
+            <div>
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ __('Appointments' ) }} ({{__($filter)}}: {{count($appointments)}})
+                </h2>
+            </div>
+            <div class="flex">
+                <a href="{{route("appointments.index", ['filter' => 'all'])}}"
+                   class="bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                    {{ __('All')}}
+                </a>
+                <a href="{{route("appointments.index", ['filter' => 'upcoming'])}}"
+                   class="bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                    {{ __('Upcoming')}}
+                </a>
+                <a href="{{route("appointments.index", ['filter' => 'last'])}}"
+                   class="bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                    {{ __('Last')}}
+                </a>
+            </div>
+        </div>
     </x-slot>
-    <div class="container w-full">
-        @foreach ($appointments as $appointment)
-            <div class="w-full">
-                <div style="width:20%">
-                    {{$appointment->day}} <br>
-                    {{$appointment->hour}}
+    <div class="container flex flex-col w-full justify-center min-h-screen m-auto">
+        @forelse ($appointments as $appointment)
+            <div class="w-full flex bg-stone-300 rounded-lg items-center mt-3 py-2">
+                <div class="w-1/6">
+                    <p class="font-semibold text-2xl tabular-nums text-center">
+                        {{(new Carbon\Carbon($appointment->schedule->date))->format('d M Y')}} <br>
+                        {{(new Carbon\Carbon($appointment->schedule->hour))->format('H:i')}}
+                    </p>
                 </div>
-                <div style="width:55%">
-                    @if ($appointment->whose == "patient" || $appointment->whose == "receptionist")
-                        {{__('Doctor')}}: {{$appointment->doctor}}
+                <div class="w-2/6">
+                    <p>
+                        {{__('Doctor')}}:
+                        {{$appointment->doctor->user->name}}
+                        {{$appointment->doctor->user->first_last_name}}
+                        {{$appointment->doctor->user->second_last_name}}
                         <br>
-                    @endif
-                    @if ($appointment->whose == "doctor" || $appointment->whose == "receptionist")
-                        {{__('Patient')}}: {{$appointment->patient}}
-                        <br>
-                    @endif
+                        @if ($whose !== "patient")
+                            {{__('Patient')}}:
+                            {{$appointment->patient->user->name}}
+                            {{$appointment->patient->user->first_last_name}}
+                            <br>
+                        @endif
+                    </p>
                 </div>
-                <div style="width:25%">
-                    <button type="button" class="md:w-32 bg-orange-800 hover:bg-orange-dark text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-orange-500 transition ease-in-out duration-300">
-                        {{__('Send confirm reminder')}}
-                    </button>
-                    <button type="button" class="md:w-32 bg-orange-800 hover:bg-orange-dark text-white font-bold py-2 px-4 rounded-lg mt-3 hover:bg-orange-500 transition ease-in-out duration-300">
-                        {{__('Cancel appointment')}}
+                <div class="w-1/2 flex justify-around items-center">
+                    @if ($whose == "receptionist")
+                        <a href="{{route('appointments.sendConfirmReminder', ['id' => $appointment->id])}}"
+                           class="bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                            {{ __('Send confirm reminder')}}
+                        </a>
+                        <button type="button"
+                           class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                            {{ __('Cancel appointment')}}
+                        </button>
+                    @endif
+                    @if ($whose == "patient")
+                        <button type="button" class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                            <a href="">{{ __('Confirm Appointment')}}</a>
+                        </button>
+                    @endif
+                    <button type="button" class="bg-teal-800 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                        <a href="{{route('appointments.show', [$appointment])}}">{{ __('Show More')}}</a>
                     </button>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <div class="flex justify-center self-center items-center min-h-full w-full">
+                <div>
+                    <h2 class="text-xl font-extrabold">{{__('No data available.')}}</h2>
+                </div>
+            </div>
+        @endforelse
     </div>
 </x-app-layout>

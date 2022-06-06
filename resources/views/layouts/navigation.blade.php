@@ -30,6 +30,16 @@
                         </x-general.nav.link>
                     </li>
                     <li>
+                        <x-general.nav.link :href="route('appointments.index')" :active="request()->routeIs('appointments.*')">
+                            {{__('Appointments')}}
+                        </x-general.nav.link>
+                    </li>
+                    <li>
+                        <x-general.nav.link :href="route('home')">
+                            {{__('Profile')}}
+                        </x-general.nav.link>
+                    </li>
+                    <li>
                         <x-general.nav.link :href="route('logout')">
                             {{__('Logout')}}
                         </x-general.nav.link>
@@ -38,6 +48,11 @@
                     <li>
                         <x-general.nav.link :href="route('login')" :active="request()->routeIs('login')">
                             {{__('Login')}}
+                        </x-general.nav.link>
+                    </li>
+                    <li>
+                        <x-general.nav.link :href="route('patients.create')" :active="request()->routeIs('patients.create')">
+                            {{__('Register')}}
                         </x-general.nav.link>
                     </li>
                 @endauth

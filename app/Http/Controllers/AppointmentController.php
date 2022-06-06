@@ -8,42 +8,43 @@ use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\Schedule;
 use Carbon\Carbon;
+use DateTime;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
-use PhpParser\Builder;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AppointmentController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $list = [];
-        $all = Appointment::all();
-        // TODO: Filtrar citas
-        $filtered = $all;
+    public function index(Request $request) {
+        $filter = $request->query('filter') ?? 'all';
+        $user = User::find(Auth::id());
 
-        foreach ($filtered as $appointment) {
-            $result = new AppointmentResult();
-            $doctor = Doctor::find($appointment->doctor_id)->first();
-            $doctor = User::find($doctor->user_id)->first();
-            $result->doctor = $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name;
-            $patient = Patient::find($appointment->patient_id)->first();
-            $patient = User::find($patient->user_id)->first();
-            $result->patient = $patient->name." ".$patient->first_last_name." ".$patient->second_last_name;
-            $schedule = Schedule::find($appointment->schedule_id)->first();
-            $result->day = $schedule->date;
-            $result->hour = $schedule->hour;
-            $result->whose = "receptionist";
-            array_push($list, $result);
-        }
-        return view("appointments.list")->with("appointments", $list);
+        $list = $user
+            ->appointments()
+            ->whereHas('schedule', function (Builder $query) use ($filter) {
+                if ($filter === 'upcoming')
+                    return $query->where('date', '>=', Carbon::now());
+                if ($filter === 'last')
+                    return $query->where('date', '<', Carbon::now());
+                return $query;
+            })
+            ->get();
+
+        return view("appointments.list")->with("appointments", $list)
+            ->with('whose', $user->getAttribute('type'))
+            ->with('filter', $filter);
+    }
+
+    public function show(Appointment $appointment){
+
+        $user = User::find(Auth::id());
+
+        return view("appointments.details")->with("appointment", $appointment)
+            ->with('whose',$user->getAttribute('type'));
     }
 
     /**
@@ -94,15 +95,22 @@ class AppointmentController extends Controller
         ]));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    public function sendConfirmReminder($id){
+        $appointment = Appointment::find($id);
+        $patient = $appointment->patient->user;
+        $doctor = $appointment->doctor->user;
+        $schedule = $appointment->schedule;
+        $day = $schedule->date;
+        $hour = $schedule->hour;
+        Mail::To($patient->email)
+            ->send(new AppointmentConfirmationRequest(
+                    $patient->name." ".$patient->first_last_name." ".$patient->second_last_name,
+                    date('d-M-Y', strtotime($day)),
+                    date('h:i a', strtotime($hour)),
+                    $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name
+                )
+            );
+        return redirect(route('appointments.index'));
     }
 
     /**
@@ -119,7 +127,7 @@ class AppointmentController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
@@ -138,12 +146,4 @@ class AppointmentController extends Controller
     {
         //
     }
-}
-
-class AppointmentResult {
-    public $doctor;
-    public $patient;
-    public $whose;
-    public $day;
-    public $hour;
 }

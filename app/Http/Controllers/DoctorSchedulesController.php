@@ -12,7 +12,8 @@ class DoctorSchedulesController extends Controller
     {
         $add_weeks = intval($request->query('add_weeks') ?? 0);
         $doctors = Doctor::all();
-        $doctor = $request->query('doctor') ?? $doctors->first();
+        $doctor = Doctor::find($request->query('doctor')) ?? $doctors->first();
+
 
         return view('schedules', [
             'doctors' => $doctors,

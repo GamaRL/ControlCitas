@@ -37,11 +37,11 @@ Route::get('/email/verification-notification', [AuthController::class, 'resendVe
 
 // Doctors routes
 Route::resource('doctors', DoctorController::class)
-    ->only('create', 'store','edit');
+    ->only('create', 'store','edit','update');
 
 // Patients routes
 Route::resource('patients', PatientController::class)
-    ->only('create', 'store','edit');
+    ->only('create', 'store', 'edit');
 
 // Doctors-Schedule routes
 Route::get('doctors/schedules/all', [DoctorSchedulesController::class, 'all'])
@@ -50,7 +50,11 @@ Route::get('doctors/schedules/all', [DoctorSchedulesController::class, 'all'])
 Route::resource('doctors.schedules', DoctorSchedulesController::class);
 
 Route::resource('appointments', AppointmentController::class)
-    ->only('index', 'create', 'store')
+    ->only('index', 'create', 'store', 'show')
+    ->middleware(['auth','verified']);
+
+Route::get('appointments/sendConfirmReminder/{id}', [AppointmentController::class, 'sendConfirmReminder'])
+    ->name('appointments.sendConfirmReminder')
     ->middleware(['auth','verified']);
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rules\Password;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class DoctorController extends Controller
@@ -57,17 +58,24 @@ class DoctorController extends Controller
         return redirect(route('home'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit()
     {
+        $id = Auth::id();
         $user = User::find($id);
+        if($user == null)
+            return redirect(route('home'));
         return view('shared.edit_profile')
-                ->with('profile','patients')
+                ->with('profile','doctors')
                 ->with('user',$user);
+    }
+
+    public function update(Request $request){
+        $id = Auth::id();
+        $user = User::find($id);
+        if($user == null){
+            $user->email = $request->get("email");
+            $user->telephone = $request->get("telephone");
+        }
+        return redirect(route('home'));
     }
 }

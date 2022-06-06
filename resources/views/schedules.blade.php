@@ -9,12 +9,14 @@
     <div class="container flex flex-wrap justify-center lg:p-10">
         <div class="flex justify-start w-full">
             <label>
-                <select>
-                    @forelse($doctors as $doctor)
-                        <option value="{{$doctor->id}}">
-                            {{$doctor->user->getAttribute('name')}}
-                            {{$doctor->user->getAttribute('first_last_name')}}
-                            {{$doctor->user->getAttribute('second_last_name')}}
+                <select id="doctor">
+                    @forelse($doctors as $s_doctor)
+                        <option value="{{$s_doctor->id}}" @if($doctor->id === $s_doctor->id) selected @endif>
+                            {{$s_doctor->user->getAttribute('name')}}
+                            {{$s_doctor->user->getAttribute('first_last_name')}}
+                            {{$s_doctor->user->getAttribute('second_last_name')}}
+                            /
+                            {{__($doctor->speciality)}}
                         </option>
                     @empty
                         <h2>{{__("There are no registered doctors.")}}</h2>
@@ -33,4 +35,11 @@
         </div>
         <x-patient-calendar :doctor="$doctor" :addWeeks="$add_weeks"></x-patient-calendar>
     </div>
+    <script>
+        document.getElementById('doctor')
+            .addEventListener('change', event => {
+                window.location = `{!! route('doctors.schedules.all') !!}?add_weeks={!! $add_weeks !!}&doctor=${event.target.value}`;
+
+            })
+    </script>
 </x-app-layout>

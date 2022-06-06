@@ -16,8 +16,9 @@
                 </div>
             </div>
             <x-forms.errors :errors="$errors"></x-forms.errors>
-            <form autocomplete="off" class="mt-3 w-full" method="post" action="{{route($profile.'.store')}}">
+            <form autocomplete="off" class="mt-3 w-full" method="POST" action="{{route($profile.'.update')}}">
                 @csrf
+                @method('put')
                 <x-forms.input name="email" type="email" value="{{$user->email}}">
                     {{__('Email')}}
                 </x-forms.input>
