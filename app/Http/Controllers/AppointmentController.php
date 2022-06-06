@@ -158,7 +158,8 @@ class AppointmentController extends Controller
     public function destroy($id)
     {
         $appointment = Appointment::find($id);
-        if($appointment !== null && $appointment->patient->user->id == Auth::id()) {
+        if($appointment !== null && $appointment->patient->user->id == Auth::id()
+            && Carbon::now()->diffInDays(new Carbon($appointment->schedule->date.' '.$appointment->schedule->hour)) > 1) {
             $appointment->delete();
         }
         return redirect(route('appointments.index'));

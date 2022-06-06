@@ -60,10 +60,12 @@
                             <a class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs"
                                  href="{{route('appointments.confirm', ['id' => $appointment->id])}}">{{ __('Confirm Appointment')}}
                             </a>
-                            <a href="{{route('appointments.destroy', ['id' => $appointment->id])}}"
-                                class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
-                                 {{ __('Cancel appointment')}}
-                             </a>
+                            @if(\Carbon\Carbon::now()->diffInDays(new \Carbon\Carbon($appointment->schedule->date.' '.$appointment->schedule->hour)) > 1)
+                                <a href="{{route('appointments.destroy', ['id' => $appointment->id])}}"
+                                    class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                                    {{ __('Cancel appointment')}}
+                                </a>
+                             @endif
                         @else
                             &#10004;&nbsp;{{__("CONFIRMED")}}
                         @endif
