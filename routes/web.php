@@ -71,6 +71,10 @@ Route::get('appointments/sendConfirmReminder/{id}', [AppointmentController::clas
     ->name('appointments.sendConfirmReminder')
     ->middleware(['auth','verified']);
 
+Route::get('appointments/confirm/{id}', [AppointmentController::class, 'confirmAppointment'])
+    ->name('appointments.confirm')
+    ->middleware(['auth','verified']);
+
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
 

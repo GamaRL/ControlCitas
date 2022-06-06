@@ -60,9 +60,13 @@
                         </button>
                     @endif
                     @if ($whose == "patient")
-                        <button type="button" class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
-                            <a href="">{{ __('Confirm Appointment')}}</a>
-                        </button>
+                        @if ($appointment->confirmed_at === null)
+                            <button type="button" class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                                <a href="{{route('appointments.confirm', ['id' => $appointment->id])}}">{{ __('Confirm Appointment')}}</a>
+                            </button>
+                        @else
+                            &#10004;&nbsp;{{__("CONFIRMED")}}
+                        @endif
                     @endif
                     <button type="button" class="bg-teal-800 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                         <a href="{{route('appointments.show', [$appointment])}}">{{ __('Show More')}}</a>

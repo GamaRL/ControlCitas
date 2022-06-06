@@ -98,19 +98,31 @@ class AppointmentController extends Controller
 
     public function sendConfirmReminder($id){
         $appointment = Appointment::find($id);
-        $patient = $appointment->patient->user;
-        $doctor = $appointment->doctor->user;
-        $schedule = $appointment->schedule;
-        $day = $schedule->date;
-        $hour = $schedule->hour;
-        Mail::To($patient->email)
-            ->send(new AppointmentConfirmationRequest(
-                    $patient->name." ".$patient->first_last_name." ".$patient->second_last_name,
-                    date('d-M-Y', strtotime($day)),
-                    date('h:i a', strtotime($hour)),
-                    $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name
-                )
-            );
+        if($appointment !== null) {
+            $patient = $appointment->patient->user;
+            $doctor = $appointment->doctor->user;
+            $schedule = $appointment->schedule;
+            $day = $schedule->date;
+            $hour = $schedule->hour;
+            Mail::To($patient->email)
+                ->send(new AppointmentConfirmationRequest(
+                        $patient->name." ".$patient->first_last_name." ".$patient->second_last_name,
+                        date('d-M-Y', strtotime($day)),
+                        date('h:i a', strtotime($hour)),
+                        $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name,
+                        $appointment->id
+                    )
+                );
+        }
+        return redirect(route('appointments.index'));
+    }
+
+    public function confirmAppointment($id){
+        $appointment = Appointment::find($id);
+        if($appointment !== null && $appointment->patient->user->id == Auth::id()) {
+            $appointment->confirmed_at = Carbon::now();
+            $appointment->save();
+        }
         return redirect(route('appointments.index'));
     }
 

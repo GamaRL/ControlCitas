@@ -16,17 +16,19 @@ class AppointmentConfirmationRequest extends Mailable
     public $day;
     public $hour;
     public $doctor;
+    public $id;
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($patient, $day, $hour, $doctor)
+    public function __construct($patient, $day, $hour, $doctor, $id)
     {
         $this->patient = $patient;
         $this->day = $day;
         $this->hour = $hour;
         $this->doctor = $doctor;
+        $this->id = $id;
     }
 
     /**
@@ -40,6 +42,7 @@ class AppointmentConfirmationRequest extends Mailable
                     ->with('patient', $this->patient)
                     ->with('day', $this->day)
                     ->with('hour', $this->hour)
-                    ->with('doctor', $this->doctor);
+                    ->with('doctor', $this->doctor)
+                    ->with('id', $this->id);
     }
 }
