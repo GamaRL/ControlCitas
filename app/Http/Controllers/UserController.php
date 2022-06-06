@@ -12,6 +12,15 @@ use Illuminate\View\View;
 
 class UserController extends Controller
 {
+    public function index(){
+        $id = Auth::id();
+        $user = User::find($id);
+        if($user == null)
+            return redirect(route('home'));
+        return view('shared.view_profile')
+                ->with('user',$user);
+    }
+
     public function edit()
     {
         $id = Auth::id();
@@ -49,7 +58,7 @@ class UserController extends Controller
                     ->withErrors($validator->errors())
                     ->withInput();
             }
-            
+
             $user->email = $request->input("email");
             $user->telephone = $request->input("telephone");
             $user->save();

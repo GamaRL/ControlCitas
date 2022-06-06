@@ -35,7 +35,7 @@
                         </x-general.nav.link>
                     </li>
                     <li>
-                        <x-general.nav.link :href="route('home')">
+                        <x-general.nav.link :href="route('profile.view')">
                             {{__('View Profile')}}
                         </x-general.nav.link>
                     </li>

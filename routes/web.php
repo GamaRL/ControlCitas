@@ -36,9 +36,10 @@ Route::get('email/verify', [AuthController::class, 'verifyForm'])->name('verific
 Route::get('/email/verification-notification', [AuthController::class, 'resendVerificationLink'])
     ->middleware(['auth', 'throttle:6,1'])->name('verification.send');
 
-// Doctors routes
-Route::resource('doctors', DoctorController::class)
-    ->only('create', 'store');
+// Profile routes
+Route::get('profile', [UserController::class, 'index'])
+    ->name('profile.view')
+    ->middleware(['auth','verified']);
 
 Route::get('profile/edit', [UserController::class, 'edit'])
     ->name('profile.edit')
@@ -47,6 +48,10 @@ Route::get('profile/edit', [UserController::class, 'edit'])
 Route::put('profile/update', [UserController::class, 'update'])
 ->name('profile.update')
 ->middleware(['auth','verified']);
+
+// Doctors routes
+Route::resource('doctors', DoctorController::class)
+    ->only('create', 'store');
 
 // Patients routes
 Route::resource('patients', PatientController::class)
