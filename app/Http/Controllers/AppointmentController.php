@@ -13,6 +13,7 @@ use DateTime;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -24,8 +25,12 @@ class AppointmentController extends Controller
         $filter = $request->query('filter') ?? 'all';
         $user = User::find(Auth::id());
 
-        $list = $user
-            ->appointments()
+        if ($user->type !== 'receptionist')
+            $query = $user->appointments();
+        else
+            $query = Appointment::query();
+
+        $list = $query
             ->whereHas('schedule', function (Builder $query) use ($filter) {
                 if ($filter === 'upcoming')
                     return $query->where('date', '>=', Carbon::now());

@@ -1,7 +1,5 @@
 @props(["name", "options", "labels" => null, "disabled" => false])
 
-@dd(collect($options)->mergeRecursive($labels))
-
 <div class="flex flex-col w-full my-2">
     <label for="{{$name}}" class="block mb-2 text-sm font-medium text-gray-900">
         {{$slot}}
