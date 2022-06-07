@@ -5,15 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Doctor;
-use App\Models\Patient;
 use App\Models\Schedule;
 use App\Mail\AppointmentConfirmationRequest;
 use Carbon\Carbon;
-use DateTime;
 use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
@@ -105,26 +101,14 @@ class AppointmentController extends Controller
         $appointment = Appointment::find($id);
         if($appointment !== null) {
             $patient = $appointment->patient->user;
-            $doctor = $appointment->doctor->user;
-            $schedule = $appointment->schedule;
-            $day = $schedule->date;
-            $hour = $schedule->hour;
             Mail::To($patient->email)
-                ->send(new AppointmentConfirmationRequest(
-                        $patient->name." ".$patient->first_last_name." ".$patient->second_last_name,
-                        date('d-M-Y', strtotime($day)),
-                        date('h:i a', strtotime($hour)),
-                        $doctor->name." ".$doctor->first_last_name." ".$doctor->second_last_name,
-                        $appointment->id
-                    )
-                );
+                ->send(new AppointmentConfirmationRequest($appointment));
         }
         return redirect(route('appointments.index'));
     }
 
-    public function confirmAppointment($id){
-        $appointment = Appointment::find($id);
-        if($appointment !== null && $appointment->patient->user->id == Auth::id()) {
+    public function confirmAppointment(Appointment $appointment){
+        if($appointment->patient->user->id == Auth::id()) {
             $appointment->confirmed_at = Carbon::now();
             $appointment->save();
         }
@@ -154,12 +138,6 @@ class AppointmentController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id)
     {
         $appointment = Appointment::find($id);

@@ -22,7 +22,7 @@ class PatientCalendar extends Component
      * Create a new component instance.
      *
      * @param Doctor $doctor
-     * @param int $add_weeks
+     * @param int $addWeeks
      */
     public function __construct(Doctor $doctor, int $addWeeks)
     {
@@ -36,7 +36,7 @@ class PatientCalendar extends Component
 
         $week_schedule = Collection::empty();
 
-        for ($hour = 9; $hour <= 19; $hour++) {
+        for ($hour = 9; $hour <= 17; $hour++) {
             $minutes = ['00', '30'];
             foreach ($minutes as $minute) {
                 $hour_schedule = Collection::make();

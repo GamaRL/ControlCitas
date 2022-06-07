@@ -2,8 +2,9 @@
 
 namespace App\Mail;
 
+use App\Models\Appointment;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 
@@ -11,24 +12,29 @@ class AppointmentConfirmationRequest extends Mailable
 {
     use Queueable, SerializesModels;
 
-    public $subject = "Solicitud de confirmación de cita";
-    public $patient;
-    public $day;
-    public $hour;
-    public $doctor;
-    public $id;
+    public string $patient;
+    public string $day;
+    public string $hour;
+    public string $doctor;
+    private string $url;
+
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct($patient, $day, $hour, $doctor, $id)
+    public function __construct(Appointment $appointment)
     {
-        $this->patient = $patient;
-        $this->day = $day;
-        $this->hour = $hour;
-        $this->doctor = $doctor;
-        $this->id = $id;
+        $this->patient = $appointment->patient->user->name
+            .' ' . $appointment->patient->user->first_last_name
+            .' ' . $appointment->patient->user->second_last_name;
+        $this->doctor = $appointment->doctor->user->name
+            .' ' . $appointment->doctor->user->first_last_name
+            .' ' . $appointment->doctor->user->second_last_name;
+        $this->day = (new Carbon($appointment->schedule->date))->format('d/M/Y');
+        $this->hour = (new Carbon($appointment->schedule->date))->format('H:i');
+        $this->url = route('appointments.confirm', ['id' => $appointment->getAttribute('id')]);
+        $this->reason = $appointment->reason;
     }
 
     /**
@@ -38,11 +44,12 @@ class AppointmentConfirmationRequest extends Mailable
      */
     public function build()
     {
-        return $this->view('emails.solicitud_confirmacion_cita')
+        return $this->markdown('emails.solicitud_confirmacion_cita')
                     ->with('patient', $this->patient)
                     ->with('day', $this->day)
                     ->with('hour', $this->hour)
                     ->with('doctor', $this->doctor)
-                    ->with('id', $this->id);
+                    ->with('reason', $this->reason)
+                    ->with('url', $this->url);
     }
 }
