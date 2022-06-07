@@ -50,7 +50,7 @@
                 </div>
                 <div class="w-1/2 flex justify-around items-center">
                     @if ($whose == "receptionist")
-                        <a href="{{route('appointments.sendConfirmReminder', ['$appointment' => $appointment])}}"
+                    <a href="{{route('appointments.sendConfirmReminder', ['id' => $appointment])}}"
                            class="bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                             {{ __('Send confirm reminder')}}
                         </a>

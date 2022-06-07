@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Doctor;
+use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class DoctorSchedulesController extends Controller
 {
@@ -20,21 +23,46 @@ class DoctorSchedulesController extends Controller
 
         $view = "patients.schedules";
 
-        if ($user->type === 'doctor')
+        if ($user->type === 'doctor') {
+            Doctor::where('user_id', Auth::id())->first();
             $view = "doctors.schedules";
+        }
         elseif ($user->type === 'receptionist')
             $view = "receptionist.schedules";
 
         return view($view, [
-            'doctors' => $doctors,
             'doctor' => $doctor,
+            'doctors' => $doctors,
             'add_weeks' => $add_weeks
         ]);
     }
 
-    public function index(Doctor $doctor)
+    public function store(Doctor $doctor, Request $request)
     {
-        $doctor = Doctor::first();
-        return view('schedules', ['doctors' => $doctor]);
+        if($doctor->user->id !== Auth::id())
+            throw new HttpException(404);
+
+        $validator = Validator::make($request->input(),[
+            'date' => 'required|date|after:today',
+            'hour' => 'required|date_format:H:i'
+        ]);
+
+        $doctor->schedules()->create([
+            'date' => $request->input('date'),
+            'hour' => $request->input('hour')
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function destroy(Doctor $doctor, Schedule $schedule, Request $request)
+    {
+        if($doctor->user->id !== Auth::id())
+            throw new HttpException(404);
+
+        if ($schedule->appointment === null)
+            $schedule->delete();
+
+        return redirect()->back();
     }
 }

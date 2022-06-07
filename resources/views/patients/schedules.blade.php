@@ -36,6 +36,7 @@
         <x-patient-calendar :doctor="$doctor" :addWeeks="$add_weeks"></x-patient-calendar>
     </div>
     <script>
+        // Change de selected doctor
         document.getElementById('doctor')
             .addEventListener('change', event => {
                 window.location = `{!! route('doctors.schedules.all') !!}?add_weeks={!! $add_weeks !!}&doctor=${event.target.value}`;

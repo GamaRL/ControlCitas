@@ -33,7 +33,7 @@ class AppointmentConfirmationRequest extends Mailable
             .' ' . $appointment->doctor->user->second_last_name;
         $this->day = (new Carbon($appointment->schedule->date))->format('d/M/Y');
         $this->hour = (new Carbon($appointment->schedule->date))->format('H:i');
-        $this->url = route('appointments.confirm', ['id' => $appointment->getAttribute('id')]);
+        $this->url = route('appointments.confirm', ['appointment' => $appointment->getAttribute('id')]);
         $this->reason = $appointment->reason;
     }
 

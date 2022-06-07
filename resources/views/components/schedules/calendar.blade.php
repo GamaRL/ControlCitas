@@ -26,37 +26,70 @@
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 text-center">
                         {{$hour}}
                     </th>
-                    @foreach($schedule as $day)
+                    @foreach($schedule as $day => $cell)
                         <td class="px-6 py-4 text-center">
                             @switch($whose)
                                 @case('patient')
-                                    @if($day !== null)
-                                        @if($day->appointment === null)
-                                            <x-general.link href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $day])!!}">
+                                    @if($cell !== null)
+                                        @if($cell->appointment === null)
+                                            <x-general.link
+                                                href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $cell])!!}">
                                                 Agendar
                                             </x-general.link>
                                         @else
-                                            <x-general.link href="{{route('appointments.show', [$day->appointment])}}">
+                                            <x-general.link href="{{route('appointments.show', [$cell->appointment])}}">
                                                 Ver mi cita
                                             </x-general.link>
                                         @endif
                                     @endif
                                     @break
                                 @case('receptionist')
-                                    @if($day !== null)
-                                        @if($day->appointment === null)
+                                    @if($cell !== null)
+                                        @if($cell->appointment === null)
                                             <span class="h-full text-green-500">Free</span>
                                         @else
                                             <div class="w-full">
-                                                {{$day->appointment->patient->user->name}}
-                                                {{$day->appointment->patient->user->first_last_name}}
-                                                {{$day->appointment->patient->user->second_last_name}}
+                                                {{$cell->appointment->patient->user->name}}
+                                                {{$cell->appointment->patient->user->first_last_name}}
+                                                {{$cell->appointment->patient->user->second_last_name}}
                                                 <br>
-                                                <x-general.link href="{{route('appointments.show', [$day->appointment])}}">
+                                                <x-general.link
+                                                    href="{{route('appointments.show', [$cell->appointment])}}">
                                                     {{__('Show More')}}
                                                 </x-general.link>
                                             </div>
                                         @endif
+                                    @endif
+                                    @break
+                                @case('doctor')
+                                    @if($cell !== null)
+                                        @if($cell->appointment === null)
+                                            <form action="{{route('doctors.schedules.destroy', ['doctor' => $doctor, 'schedule' => $cell])}}"
+                                                  method="post">
+                                                @method('delete')
+                                                @csrf
+                                                <button type="submit" class="text-red-600 hover:underline">-</button>
+                                            </form>
+                                        @else
+                                            <div class="w-full">
+                                                {{$cell->appointment->patient->user->name}}
+                                                {{$cell->appointment->patient->user->first_last_name}}
+                                                {{$cell->appointment->patient->user->second_last_name}}
+                                                <br>
+                                                <x-general.link
+                                                    href="{{route('appointments.show', [$cell->appointment])}}">
+                                                    {{__('Show More')}}
+                                                </x-general.link>
+                                            </div>
+                                        @endif
+                                    @elseif((new Carbon\Carbon($day))->isAfter(Carbon\Carbon::now()))
+                                        <form action="{{route('doctors.schedules.store', ['doctor' => $doctor])}}"
+                                              method="post">
+                                            @csrf
+                                            <input type="hidden" name="date" value="{{$day}}">
+                                            <input type="hidden" name="hour" value="{{$hour}}">
+                                            <button type="submit" class="text-blue-600 hover:underline">+</button>
+                                        </form>
                                     @endif
                                     @break
                             @endswitch
