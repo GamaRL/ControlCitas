@@ -68,7 +68,9 @@
                                                   method="post">
                                                 @method('delete')
                                                 @csrf
-                                                <button type="submit" class="text-red-600 hover:underline">-</button>
+                                                <button type="submit" class="bg-red-600 hover:bg-red-400 w-full text-white font-bold text-2xl rounded-lg">
+                                                    -
+                                                </button>
                                             </form>
                                         @else
                                             <div class="w-full">
@@ -84,11 +86,15 @@
                                         @endif
                                     @elseif((new Carbon\Carbon($day))->isAfter(Carbon\Carbon::now()))
                                         <form action="{{route('doctors.schedules.store', ['doctor' => $doctor])}}"
-                                              method="post">
+                                              method="post"
+                                              class="flex w-full h-full"
+                                        >
                                             @csrf
                                             <input type="hidden" name="date" value="{{$day}}">
                                             <input type="hidden" name="hour" value="{{$hour}}">
-                                            <button type="submit" class="text-blue-600 hover:underline">+</button>
+                                            <button type="submit" class="text-white hover:bg-lime-400 font-bold bg-lime-500 w-full h-full text-2xl rounded-lg">
+                                                +
+                                            </button>
                                         </form>
                                     @endif
                                     @break
