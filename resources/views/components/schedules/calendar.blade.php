@@ -28,17 +28,38 @@
                     </th>
                     @foreach($schedule as $day)
                         <td class="px-6 py-4 text-center">
-                            @if($day !== null)
-                                @if($day->appointment === null)
-                                    <x-general.link href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $day])!!}">
-                                        Agendar
-                                    </x-general.link>
-                                @else
-                                    <x-general.link href="{{route('appointments.show', [$day->appointment])}}">
-                                        Ver mi cita
-                                    </x-general.link>
-                                @endif
-                            @endif
+                            @switch($whose)
+                                @case('patient')
+                                    @if($day !== null)
+                                        @if($day->appointment === null)
+                                            <x-general.link href="{!!route('appointments.create', ['doctor' => $doctor, 'schedule' => $day])!!}">
+                                                Agendar
+                                            </x-general.link>
+                                        @else
+                                            <x-general.link href="{{route('appointments.show', [$day->appointment])}}">
+                                                Ver mi cita
+                                            </x-general.link>
+                                        @endif
+                                    @endif
+                                    @break
+                                @case('receptionist')
+                                    @if($day !== null)
+                                        @if($day->appointment === null)
+                                            <span class="h-full text-green-500">Free</span>
+                                        @else
+                                            <div class="w-full">
+                                                {{$day->appointment->patient->user->name}}
+                                                {{$day->appointment->patient->user->first_last_name}}
+                                                {{$day->appointment->patient->user->second_last_name}}
+                                                <br>
+                                                <x-general.link href="{{route('appointments.show', [$day->appointment])}}">
+                                                    {{__('Show More')}}
+                                                </x-general.link>
+                                            </div>
+                                        @endif
+                                    @endif
+                                    @break
+                            @endswitch
                         </td>
                     @endforeach
                 </tr>

@@ -7,13 +7,12 @@ use Carbon\Carbon;
 use Carbon\CarbonInterface;
 use DateTime;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use Illuminate\View\Component;
-use Illuminate\View\View;
 
-class PatientCalendar extends Component
+class ReceptionistCalendar extends Component
 {
+
     private Doctor $doctor;
     private DateTime $date;
 
@@ -29,7 +28,12 @@ class PatientCalendar extends Component
         $this->date = Carbon::now()->addWeeks($addWeeks);
     }
 
-    public function render() : View
+    /**
+     * Get the view / contents that represent the component.
+     *
+     * @return \Illuminate\Contracts\View\View|\Closure|string
+     */
+    public function render()
     {
         $start_week = $this->date->copy()->startOfWeek(CarbonInterface::SUNDAY);
 
@@ -42,22 +46,12 @@ class PatientCalendar extends Component
                 for ($i = 0; $i < 7; $i++) {
                     $date = $start_week->copy()->addDays($i);
 
-
                     $hours = $this->doctor->schedules()
                         ->where('date', $date->format('Y-m-d'))
                         ->where('hour', $hour . ':' . $minute)
                         ->first();
 
-                    if ($hours !== null && $hours->appointment === null) {
-                        if ((new Carbon($hours->getAttribute('date')))->isAfter(Carbon::now()))
-                            $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => $hours]));
-                        else
-                            $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => null]));
-                    }
-                    else if ($hours !== null && $hours->appointment->patient->user->id === Auth::id())
-                        $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => $hours]));
-                    else
-                        $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => null]));
+                    $hour_schedule->push(collect(['date' => $date->format('Y-m-d'), 'schedule' => $hours]));
                 }
                 $hour_schedule = $hour_schedule->mapWithKeys(function ($item) {
                     return [$item['date'] => $item['schedule']];
@@ -74,7 +68,7 @@ class PatientCalendar extends Component
             'week_schedule' => $week_schedule,
             'start_week' => $start_week,
             'doctor' => $this->doctor,
-            'whose' => 'patient'
+            'whose' => 'receptionist'
         ]);
     }
 }
