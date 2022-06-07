@@ -75,6 +75,10 @@ Route::get('appointments/confirm/{appointment}', [AppointmentController::class, 
     ->name('appointments.confirm')
     ->middleware(['auth','verified']);
 
+Route::post('appointments/attend/{appointment}', [AppointmentController::class, 'attendAppointment'])
+    ->name('appointments.attend')
+    ->middleware(['auth','verified']);
+
 Route::get('appointments/cancel/{id}', [AppointmentController::class, 'destroy'])
     ->name('appointments.destroy')
     ->middleware(['auth','verified']);
