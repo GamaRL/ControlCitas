@@ -63,6 +63,10 @@ Route::get('doctors/schedules/all', [DoctorSchedulesController::class, 'all'])
 
 Route::resource('doctors.schedules', DoctorSchedulesController::class);
 
+Route::get('appointments/export', [AppointmentController::class, 'export'])
+    ->name('appointments.export')
+    ->middleware(['auth', 'verified']);
+
 Route::resource('appointments', AppointmentController::class)
     ->only('index', 'create', 'store', 'show')
     ->middleware(['auth','verified']);
@@ -82,6 +86,7 @@ Route::post('appointments/attend/{appointment}', [AppointmentController::class, 
 Route::get('appointments/cancel/{id}', [AppointmentController::class, 'destroy'])
     ->name('appointments.destroy')
     ->middleware(['auth','verified']);
+
 
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();

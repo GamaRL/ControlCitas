@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exports\AppointmentsExport;
 use App\Models\User;
 use App\Models\Appointment;
 use App\Models\Doctor;
@@ -13,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\View\View;
+use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class AppointmentController extends Controller
@@ -125,29 +127,6 @@ class AppointmentController extends Controller
         return back();
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
     public function destroy($id)
     {
         $appointment = Appointment::find($id);
@@ -156,5 +135,17 @@ class AppointmentController extends Controller
             $appointment->delete();
         }
         return redirect(route('appointments.index'));
+    }
+
+    public function export()
+    {
+        $user = User::find(Auth::id());
+        if ($user->type === 'receptionist')
+        {
+            $response = Excel::download(new AppointmentsExport(), Carbon::now()->format('d_M_Y').'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
+            ob_end_clean();
+            return $response;
+        }
+        throw new HttpException(403);
     }
 }

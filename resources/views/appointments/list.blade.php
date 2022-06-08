@@ -18,8 +18,12 @@
                     {{ __('Upcoming')}}
                 </a>
                 <a href="{{route("appointments.index", ['filter' => 'last'])}}"
-                   class="bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                   class="mr-2 bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                     {{ __('Last')}}
+                </a>
+                <a href="{{route("appointments.export")}}"
+                   class="bg-lime-600 hover:bg-lime-400 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                    {{ __('Export')}}
                 </a>
             </div>
         </div>
