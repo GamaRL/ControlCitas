@@ -36,9 +36,9 @@ class AppointmentsPerMonthSheet implements FromQuery, WithHeadings, WithStyles, 
                 'd.name as doctor_name',
                 'd.first_last_name as doctor_last_name1',
                 'd.second_last_name as doctor_last_name2',
-                'd.name as patient_name',
-                'd.first_last_name as patient_last_name1',
-                'd.second_last_name as patient_last_name2',
+                'p.name as patient_name',
+                'p.first_last_name as patient_last_name1',
+                'p.second_last_name as patient_last_name2',
                 's.date',
                 's.hour'
             ])
