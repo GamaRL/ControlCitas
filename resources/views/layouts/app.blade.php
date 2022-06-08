@@ -4,8 +4,11 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+        <link rel="icon" type="image/png" href="/img/logo.png">
         <link href="/css/app.css" rel="stylesheet">
         <script src="/js/app.js"></script>
+
 
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300i,400,700&display=swap" rel="stylesheet">
         <link href="https://fonts.googleapis.com/css?family=Nunito+Sans:300i,400,700&display=swap" rel="stylesheet">
