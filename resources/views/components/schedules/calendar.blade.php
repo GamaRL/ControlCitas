@@ -2,15 +2,15 @@
 
 <div class="container">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table class="w-full text-left text-gray-500">
+        <table class="w-full text-left text-gray-500 table-fixed">
             <thead class="text-gray-700 uppercase bg-indigo-100">
             <tr>
-                <th scope="col" class="text-center px-6 py-3">{{__('Hour')}}</th>
+                <th scope="col" class="text-center px-6 py-3 mas-w-1/8">{{__('Hour')}}</th>
                 @for($i = 0; $i < 7; $i++)
                     @php
                         $date = $start_week->copy()->addDays($i);
                     @endphp
-                    <th scope="col">
+                    <th scope="col" class="max-w-1/8">
                         <div class="flex flex-col justify-center px-6 py-3">
                             <span class="text-center">{{Str::ucfirst($date->getTranslatedDayName())}}</span>
                             <span class="text-center">{{$date->format("d/m/Y")}}</span>
@@ -27,7 +27,7 @@
                         {{$hour}}
                     </th>
                     @foreach($schedule as $day => $cell)
-                        <td class="px-6 py-4 text-center">
+                        <td class="px-6 py-4 text-center max-w-6xl">
                             @switch($whose)
                                 @case('patient')
                                     @if($cell !== null)
@@ -49,10 +49,11 @@
                                             <span class="h-full text-green-500">Free</span>
                                         @else
                                             <div class="w-full">
-                                                {{$cell->appointment->patient->user->name}}
-                                                {{$cell->appointment->patient->user->first_last_name}}
-                                                {{$cell->appointment->patient->user->second_last_name}}
-                                                <br>
+                                                <span class="block truncate text-ellipsis overflow-hidden">
+                                                    {{$cell->appointment->patient->user->name}}
+                                                    {{$cell->appointment->patient->user->first_last_name}}
+                                                    {{$cell->appointment->patient->user->second_last_name}}
+                                                </span>
                                                 <x-general.link
                                                     href="{{route('appointments.show', [$cell->appointment])}}">
                                                     {{__('Show More')}}
@@ -74,9 +75,11 @@
                                             </form>
                                         @else
                                             <div class="w-full">
-                                                {{$cell->appointment->patient->user->name}}
-                                                {{$cell->appointment->patient->user->first_last_name}}
-                                                {{$cell->appointment->patient->user->second_last_name}}
+                                                <span class="block truncate text-ellipsis overflow-hidden">
+                                                    {{$cell->appointment->patient->user->name}}
+                                                    {{$cell->appointment->patient->user->first_last_name}}
+                                                    {{$cell->appointment->patient->user->second_last_name}}
+                                                </span>
                                                 <br>
                                                 <x-general.link
                                                     href="{{route('appointments.show', [$cell->appointment])}}">
