@@ -46,7 +46,7 @@
                                 @case('receptionist')
                                     @if($cell !== null)
                                         @if($cell->appointment === null)
-                                            <span class="h-full text-green-500">Free</span>
+                                            <span class="h-full text-green-500">{{__("Available")}}</span>
                                         @else
                                             <div class="w-full">
                                                 <span class="block truncate text-ellipsis overflow-hidden">

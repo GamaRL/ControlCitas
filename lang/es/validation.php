@@ -167,6 +167,7 @@ return [
     'attributes' => [
         'name' => 'nombre',
         'password' => 'contraseña',
+        'new_password' => 'nueva contraseña',
         'first_last_name' => 'primer_apellido',
         'second_last_name' => 'segundo_apellido',
         'email' => 'correo electrónico',

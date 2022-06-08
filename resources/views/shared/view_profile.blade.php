@@ -34,7 +34,7 @@
                 <x-forms.input disabled name="professional_license" value="{{$user->doctor->professional_license}}">
                     {{__('Professional License')}}
                 </x-forms.input>
-                <x-forms.input disabled name="speciality" value="{{$user->doctor->speciality}}">
+                <x-forms.input disabled name="speciality" value="{{__($user->doctor->speciality)}}">
                     {{__('Speciality')}}
                 </x-forms.input>
             @endif
