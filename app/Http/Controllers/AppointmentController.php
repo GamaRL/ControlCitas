@@ -36,6 +36,10 @@ class AppointmentController extends Controller
                     return $query->where('date', '<', Carbon::now());
                 return $query;
             })
+            ->join('schedules', 'schedules.id', '=', 'appointments.schedule_id')
+            ->select('appointments.*')
+            ->orderBy('schedules.date')
+            ->orderBy('schedules.hour')
             ->get();
 
         return view("appointments.list")->with("appointments", $list)
