@@ -24,7 +24,7 @@ class DoctorSchedulesController extends Controller
         $view = "patients.schedules";
 
         if ($user->type === 'doctor') {
-            Doctor::where('user_id', Auth::id())->first();
+            $doctor = $user->doctor;
             $view = "doctors.schedules";
         }
         elseif ($user->type === 'receptionist')
