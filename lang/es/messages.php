@@ -11,4 +11,6 @@ return [
     'confirmation.body' => 'Te recordamos que tienes agendada una cita con nosotros:',
     'confirmation.button' => 'Confirmar Cita',
     'confirmation.thanks' => 'Gracias',
+    'password.reset' => 'Introduce tu correo electrónico para continuar',
+    'password.new' => 'Introduce las siguientes campos para continuar'
 ];

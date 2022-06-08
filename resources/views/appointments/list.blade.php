@@ -21,10 +21,12 @@
                    class="mr-2 bg-orange-800 hover:bg-orange-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                     {{ __('Last')}}
                 </a>
-                <a href="{{route("appointments.export")}}"
-                   class="bg-lime-600 hover:bg-lime-400 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
-                    {{ __('Export')}}
-                </a>
+                @if($whose === 'receptionist')
+                    <a href="{{route("appointments.export")}}"
+                       class="bg-lime-600 hover:bg-lime-400 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                        {{ __('Export')}}
+                    </a>
+                @endif
             </div>
         </div>
     </x-slot>
@@ -54,7 +56,7 @@
                 </div>
                 <div class="w-1/2 flex justify-around items-center">
                     @if ($whose == "receptionist")
-                    <a href="{{route('appointments.sendConfirmReminder', ['id' => $appointment])}}"
+                        <a href="{{route('appointments.sendConfirmReminder', ['id' => $appointment])}}"
                            class="bg-blue-800 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                             {{ __('Send confirm reminder')}}
                         </a>
@@ -62,20 +64,20 @@
                     @if ($whose == "patient")
                         @if ($appointment->confirmed_at === null)
                             <a class="bg-green-800 hover:bg-green-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs"
-                                 href="{{route('appointments.confirm', ['appointment' => $appointment])}}">{{ __('Confirm Appointment')}}
+                               href="{{route('appointments.confirm', ['appointment' => $appointment])}}">{{ __('Confirm Appointment')}}
                             </a>
                             @if(\Carbon\Carbon::now()->diffInDays(new \Carbon\Carbon($appointment->schedule->date.' '.$appointment->schedule->hour)) > 1)
                                 <a href="{{route('appointments.destroy', ['id' => $appointment->id])}}"
-                                    class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
+                                   class="bg-red-800 hover:bg-red-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs">
                                     {{ __('Cancel appointment')}}
                                 </a>
-                             @endif
+                            @endif
                         @else
                             &#10004;&nbsp;{{__("CONFIRMED")}}
                         @endif
                     @endif
                     <a class="bg-teal-800 hover:bg-teal-500 text-white font-bold py-2 px-4 rounded-lg transition ease-in-out duration-300 text-xs"
-                     href="{{route('appointments.show', [$appointment])}}">{{ __('Show More')}}</a>
+                       href="{{route('appointments.show', [$appointment])}}">{{ __('Show More')}}</a>
                 </div>
             </div>
         @empty

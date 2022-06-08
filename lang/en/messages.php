@@ -11,4 +11,6 @@ return [
     'confirmation.body' => 'Remember you have an appointment with us:',
     'confirmation.button' => 'Confirm Appointment',
     'confirmation.thanks' => 'Thanks',
+    'password.reset' => 'Introduce your email to continue',
+    'password.new' => 'Fill the next fields to continue'
 ];

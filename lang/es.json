@@ -16,6 +16,8 @@
     "Reason": "Motivo",
     "Send": "Enviar",
     "New Appointment": "Nueva Cita",
+    "New Password": "Nueva Contraseña",
+    "Confirm New Password": "Confirmar Nueva Contraseña",
     "Appointments": "Citas",
     "Telephone Number": "Número de Teléfono",
     "Age": "Edad",
@@ -37,5 +39,8 @@
     "Regards": "Saludos",
     "If you're having trouble clicking the \":actionText\" button, copy and paste the URL below\ninto your web browser:": "Si tienes problemas al presionar el botón \":actionText\", copia y pega en tu navegador el siguiente enlace:",
     "Please click the button below to verify your email address.": "Presiona el botón de abajo para verificar tu cuenta de correo electrónico",
-    "If you did not create an account, no further action is required.": "Si no creaste una cuenta, no se requiere ninguna otra acción."
+    "If you did not create an account, no further action is required.": "Si no creaste una cuenta, no se requiere ninguna otra acción.",
+    "You are receiving this email because we received a password reset request for your account.": "Te enviamos este correo porque recibimos una solicitud de cambio de contraseña de tu parte.",
+    "If you did not request a password reset, no further action is required.": "Si no solicitaste una cambio de contraeeña, no se requiere ninguna otra acción.",
+    "This password reset link will expire in :count minutes.": "Este link expirará en :count minutos."
 }

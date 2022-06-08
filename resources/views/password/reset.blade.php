@@ -1,9 +1,9 @@
-@section('title', 'Login')
+@section('title', 'Forgot Password')
 
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Welcome' ) }}
+            {{ __('Forgot Password' ) }}
         </h2>
     </x-slot>
     <div class="container flex items-center justify-center min-h-screen">
@@ -15,17 +15,23 @@
                     </svg>
                 </div>
             </div>
+            <div class="mt-5">
+                {{__('messages.password.new')}}
+            </div>
             <x-forms.errors :errors="$errors"></x-forms.errors>
-            <form autocomplete="off" method="POST" action="{{route('authenticate')}}">
+            <form autocomplete="off" method="POST" action="{{route('password.update')}}">
                 @csrf
+                <input type="hidden" name="token" value="{{$token}}">
                 <x-forms.input name="email" type="email">
                     {{__('Email')}}
                 </x-forms.input>
                 <x-forms.input name="password" type="password">
-                    {{__('Password')}}
+                    {{__('New Password')}}
                 </x-forms.input>
-                <div class="flex items-center justify-between">
-                    <x-general.link href="{{route('password.request')}}">{{__('Forgot Your Password?')}}</x-general.link>
+                <x-forms.input name="password_confirmation" type="password">
+                    {{__('Confirm New Password')}}
+                </x-forms.input>
+                <div>
                     <x-general.button>{{__('Send')}}</x-general.button>
                 </div>
             </form>

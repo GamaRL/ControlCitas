@@ -146,9 +146,11 @@ class AppointmentController extends Controller
         $user = User::find(Auth::id());
         if ($user->type === 'receptionist')
         {
-            $response = Excel::download(new AppointmentsExport(), Carbon::now()->format('d_M_Y').'.xlsx', \Maatwebsite\Excel\Excel::XLSX);
-            ob_end_clean();
-            return $response;
+            return Excel::download(
+                new AppointmentsExport(),
+        Carbon::now()->format('d_M_Y').'.xlsx',
+       \Maatwebsite\Excel\Excel::XLSX
+            );
         }
         throw new HttpException(403);
     }

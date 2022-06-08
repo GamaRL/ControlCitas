@@ -26,7 +26,6 @@ class AppointmentsExport implements WithMultipleSheets
 
         $tmp = $min->copy();
 
-        echo $max->diffInMonths($tmp, false);
         while ($max->diffInMonths($tmp, false) <= 0)
         {
             $sheets[] = new AppointmentsPerMonthSheet($tmp->month, $tmp->year);

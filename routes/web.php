@@ -26,10 +26,21 @@ Route::get('/', function () {
 })->name('home');
 
 // Login routes
-Route::view('login', 'login')->name('login');
+Route::view('/login', 'login')->name('login');
 
-Route::post('login', [AuthController::class, 'authenticate'])->name('authenticate');
-Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+
+// Password reset routes
+Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])
+    ->middleware('guest')->name('password.request');
+Route::post('/forgot-password', [AuthController::class, 'sendPasswordResetLink'])
+    ->middleware('guest')->name('password.email');
+
+Route::get('/reset-password/{token}', [AuthController::class, 'resetPasswordForm'])
+    ->middleware('guest')->name('password.reset');
+Route::post('/reset-password', [AuthController::class, 'resetPassword'])
+    ->middleware('guest')->name('password.update');
 
 // Email verification routes
 Route::get('email/verify', [AuthController::class, 'verifyForm'])->name('verification.notice');

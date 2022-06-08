@@ -3,7 +3,7 @@
 <div class="container">
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-left text-gray-500">
-            <thead class="text-xs text-gray-700 uppercase bg-indigo-100">
+            <thead class="text-gray-700 uppercase bg-indigo-100">
             <tr>
                 <th scope="col" class="text-center px-6 py-3">{{__('Hour')}}</th>
                 @for($i = 0; $i < 7; $i++)
