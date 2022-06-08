@@ -115,6 +115,16 @@ class AppointmentController extends Controller
         return redirect(route('appointments.index'));
     }
 
+    public function attendAppointment(Appointment $appointment, Request $request){
+        if ($appointment->doctor->user->id == Auth::id()
+            && (new \Carbon\Carbon($appointment->schedule->date.' '.$appointment->schedule->hour))->diffInMinutes(\Carbon\Carbon::now()) <= 60) {
+            $appointment->remarks = $request->input("remarks");
+            $appointment->treatment = $request->input("treatment");
+            $appointment->save();
+        }
+        return back();
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
