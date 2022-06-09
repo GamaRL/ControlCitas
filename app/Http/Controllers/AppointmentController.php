@@ -88,6 +88,9 @@ class AppointmentController extends Controller
             ->where('date', $request->input('date'))
             ->where('hour', $request->input('hour'))->first();
 
+        $request->validate([
+            'reason' => 'required|string|min:10|max:500'
+        ]);
 
         if ($schedule === null || $schedule->appointment === null) {
             $user->appointments()->create([

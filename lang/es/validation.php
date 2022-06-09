@@ -168,11 +168,13 @@ return [
         'name' => 'nombre',
         'password' => 'contraseña',
         'new_password' => 'nueva contraseña',
-        'first_last_name' => 'primer_apellido',
-        'second_last_name' => 'segundo_apellido',
+        'first_last_name' => 'primer apellido',
+        'second_last_name' => 'segundo apellido',
         'email' => 'correo electrónico',
         'telephone' => 'teléfono',
         'professional_license' => 'cédula profesional',
-        'speciality' => 'especialidad'
+        'speciality' => 'especialidad',
+        'reason' => 'motivo',
+        'current_password' => 'contraseña actual',
     ],
 ];

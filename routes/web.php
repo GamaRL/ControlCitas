@@ -26,10 +26,14 @@ Route::get('/', function () {
 })->name('home');
 
 // Login routes
-Route::view('/login', 'login')->name('login');
+Route::view('/login', 'login')
+    ->name('login')
+->middleware('guest');
 
-Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate');
-Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::post('/login', [AuthController::class, 'authenticate'])->name('authenticate')
+->middleware('guest');
+Route::get('/logout', [AuthController::class, 'logout'])->name('logout')
+->middleware('auth');
 
 // Password reset routes
 Route::get('/forgot-password', [AuthController::class, 'forgotPassword'])

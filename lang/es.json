@@ -70,5 +70,8 @@
     "If you did not create an account, no further action is required.": "Si no creaste una cuenta, no se requiere ninguna otra acción.",
     "You are receiving this email because we received a password reset request for your account.": "Te enviamos este correo porque recibimos una solicitud de cambio de contraseña de tu parte.",
     "If you did not request a password reset, no further action is required.": "Si no solicitaste una cambio de contraeeña, no se requiere ninguna otra acción.",
-    "This password reset link will expire in :count minutes.": "Este link expirará en :count minutos."
+    "This password reset link will expire in :count minutes.": "Este link expirará en :count minutos.",
+    "years": "años",
+    "No data available.": "No hay información disponible",
+    "Send confirm reminder": "Enviar Recordatorio de Confirmación"
 }

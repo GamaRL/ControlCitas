@@ -7,7 +7,6 @@ use App\Models\Schedule;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Validator;
 use Illuminate\View\View;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -19,6 +18,8 @@ class DoctorSchedulesController extends Controller
 
         $add_weeks = intval($request->query('add_weeks') ?? 0);
         $doctors = Doctor::all();
+        if ($doctors->isEmpty())
+            throw new HttpException(404);
         $doctor = Doctor::find($request->query('doctor')) ?? $doctors->first();
 
         $view = "patients.schedules";
@@ -42,7 +43,7 @@ class DoctorSchedulesController extends Controller
         if($doctor->user->id !== Auth::id())
             throw new HttpException(404);
 
-        $validator = Validator::make($request->input(),[
+        $request->validate([
             'date' => 'required|date|after:today',
             'hour' => 'required|date_format:H:i'
         ]);

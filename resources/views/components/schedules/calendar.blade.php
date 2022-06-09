@@ -80,8 +80,7 @@
                                                     {{$cell->appointment->patient->user->first_last_name}}
                                                     {{$cell->appointment->patient->user->second_last_name}}
                                                 </span>
-                                                <br>
-                                                <x-general.link
+                                            <x-general.link
                                                     href="{{route('appointments.show', [$cell->appointment])}}">
                                                     {{__('Show More')}}
                                                 </x-general.link>

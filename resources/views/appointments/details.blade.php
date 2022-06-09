@@ -96,7 +96,7 @@
                     <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                         <dt class="text-sm font-medium text-gray-500">{{__('Age')}}</dt>
                         <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                            {{\Carbon\Carbon::now()->diffInYears($appointment->patient->birth)}}
+                            {{\Carbon\Carbon::now()->diffInYears($appointment->patient->birth)}} {{__('years')}}
                         </dd>
                     </div>
                     <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
@@ -144,7 +144,7 @@
                                 <x-forms.textarea value="{{$appointment->remarks}}" name="remarks" rows="7">{{__('Remarks')}}:</x-forms.textarea>
                                 <x-forms.textarea value="{{$appointment->treatment}}" name="treatment" rows="7">{{__('Treatment')}}:</x-forms.textarea>
                                 <x-general.button>{{__('Send')}}</x-general.button>
-                            </form>    
+                            </form>
                         @else
                             <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
                                 <dt class="text-sm font-medium text-gray-500">{{__('Remarks')}}</dt>

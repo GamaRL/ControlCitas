@@ -6,9 +6,10 @@
             {{ __('Doctor Schedules' ) }}
         </h1>
     </x-slot>
-    <div class="container flex flex-wrap justify-center lg:p-10">
-        <div class="flex justify-start w-full">
-            <div>
+    <div class="container flex flex-wrap lg:p-10">
+        <div class="flex justify-start w-1/3">
+            <div class="bg-gray-50 border border-gray-300 text-gray-900 text-sm
+                    rounded-lg block w-full p-2.5">
                 {{$doctor->user->getAttribute('name')}}
                 {{$doctor->user->getAttribute('first_last_name')}}
                 {{$doctor->user->getAttribute('second_last_name')}}

@@ -19,14 +19,18 @@ class PatientController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:120',
-            'first_last_name' => 'required|string|max:120',
-            'second_last_name' => 'required|string|max:120',
-            'email' => 'required|email|unique:users,email',
+            'name' => 'required|string|max:120|regex:/^[A-ZÁÉÍÓÚ]([A-Za-záéíóúÁÉÍÓÚ ])+$/',
+            'first_last_name' => 'required|string|max:120|regex:/^[A-ZÁÉÍÓÚ]([A-Za-záéíóúÁÉÍÓÚ ])+$/',
+            'second_last_name' => 'required|string|max:120|regex:/^[A-ZÁÉÍÓÚ]([A-Za-záéíóúÁÉÍÓÚ ])+$/',
+            'email' => 'required|email|max:120|unique:users,email',
             'password' => ['required', 'confirmed', Password::min(8)],
             'telephone' => 'required|string|regex:/^\d{10}$/',
             'birth' => 'required|date_format:Y-m-d|before:today',
-            'curp' => ['required','string','regex:/^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/']
+            'curp' => [
+                'required',
+                'string',
+                'regex:/^[A-Z]{1}[AEIOU]{1}[A-Z]{2}[0-9]{2}(0[1-9]|1[0-2])(0[1-9]|1[0-9]|2[0-9]|3[0-1])[HM]{1}(AS|BC|BS|CC|CS|CH|CL|CM|DF|DG|GT|GR|HG|JC|MC|MN|MS|NT|NL|OC|PL|QT|QR|SP|SL|SR|TC|TS|TL|VZ|YN|ZS|NE)[B-DF-HJ-NP-TV-Z]{3}[0-9A-Z]{1}[0-9]{1}$/'
+            ]
         ]);
 
         if ($validator->fails()) {

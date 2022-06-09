@@ -20,10 +20,10 @@ class DoctorController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string|max:120',
-            'first_last_name' => 'required|string|max:120',
-            'second_last_name' => 'required|string|max:120',
-            'email' => 'required|email|unique:users,email',
+            'name' => 'required|string|max:120|regex:/^[A-ZÁÉÍÓÚ]([A-Za-záéíóúÁÉÍÓÚ ])+$/',
+            'first_last_name' => 'required|string|max:120|regex:/^[A-ZÁÉÍÓÚ]([A-Za-záéíóúÁÉÍÓÚ ])+$/',
+            'second_last_name' => 'required|string|max:120|regex:/^[A-ZÁÉÍÓÚ]([A-Za-záéíóúÁÉÍÓÚ ])+$/',
+            'email' => 'required|email|unique:users,email|max:120',
             'password' => ['required', 'confirmed', Password::min(8)],
             'telephone' => 'required|string|regex:/^\d{10}$/',
             'speciality' => 'required|in:OTOLARYNGOLOGY,AUDIOMETRY',
