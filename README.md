@@ -1,64 +1,129 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
+# Medical Appointment Management System
 
-<p align="center">
-<a href="https://travis-ci.org/laravel/framework"><img src="https://travis-ci.org/laravel/framework.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 📚 Project Information
+This system enables efficient management of medical appointments, facilitating interaction between patients, doctors, and receptionists in a digital environment. The goal is to provide a robust and scalable solution for appointment management, optimizing schedule availability and improving communication among all parties involved.
 
-## About Laravel
+## 📚 Course Information
+- **Course**: Software Engineering
+- **Semester**: 2022-2
+- **Institution**: Universidad Nacional Autónoma de México (UNAM), Facultad de Ingeniería
+- **Instructor**: Ing. Sergio Noble Camargo
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 👥 Development Team
+- **Canchola Cruz**, Fernando
+- **Figueroa Villamares**, Gabriela
+- **Ríos Lira**, Gamaliel
+- **López Chong**, Jorge
+- **Verano Peralta**, María
+- **Acevedo Serrano**, Ximena
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 🎯 Objectives
+The primary objectives of this project are to:
+- Allow users (patients, doctors, receptionists) to efficiently manage medical appointments.
+- Facilitate booking, confirmation, and cancellation of appointments through a web portal.
+- Generate reports in Excel format for better appointment control.
+- Ensure user verification and protect sensitive data.
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains over 2000 video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## 🛠️ Technologies Used
+The system was developed using the following technologies:
+- **Backend**: PHP (Laravel Framework)
+- **Frontend**: Blade (Laravel), HTML, Tailwind CSS
+- **Database**: MySQL
+- **ORM**: Eloquent for data management
+- **Data Export**: Laravel Excel for generating reports in spreadsheets
+- **IDE**: PhpStorm
+- **Version Control**: GitHub
 
-## Laravel Sponsors
+## 🏗️ System Architecture
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the Laravel [Patreon page](https://patreon.com/taylorotwell).
+The system follows the **Model-View-Controller (MVC)** pattern, which ensures a clear separation between business logic, data management, and user interface.
 
-### Premium Partners
+### General Structure
+- **Model**: Defines the structure of the stored data (Users, Appointments, Doctors, etc.).
+- **View**: Blade templates for presenting information to users.
+- **Controller**: Manages business logic, coordinating views and models.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Cubet Techno Labs](https://cubettech.com)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[Many](https://www.many.co.uk)**
-- **[Webdock, Fast VPS Hosting](https://www.webdock.io/en)**
-- **[DevSquad](https://devsquad.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[OP.GG](https://op.gg)**
-- **[WebReinvent](https://webreinvent.com/?utm_source=laravel&utm_medium=github&utm_campaign=patreon-sponsors)**
-- **[Lendio](https://lendio.com)**
+## 🚀 Key Features
 
-## Contributing
+### System Users
+1. **Patients**
+   - Register and log in to the system.
+   - View available schedules and book appointments.
+   - Confirm or cancel appointments.
+   - View appointment history and receive email notifications.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+2. **Doctors**
+   - Manage their profile and consultation schedules.
+   - Attend to appointments, add notes and treatments.
+   - Review patient history and generate reports.
 
-## Code of Conduct
+3. **Receptionists**
+   - Manage appointments for all doctors.
+   - Confirm patient attendance via email notifications.
+   - Export appointment reports in Excel format.
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### Highlighted Use Cases
+- **Registration and Authentication**: Users can register as patients or doctors and verify their email.
+- **Appointment Management**: View and edit schedules, confirm and cancel appointments.
+- **Email Notifications**: Automatic appointment reminders.
+- **Reports**: Generate monthly reports in Excel for easier management.
 
-## Security Vulnerabilities
+## 🛠️ Installation and Configuration
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Prerequisites
+- **PHP** (version 8.x)
+- **Composer**
+- **Node.js** (for Tailwind CSS)
+- **MySQL** (database server)
+- **Git** (for version control)
 
-## License
+### Installation Instructions
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/your-repository.git
+   cd your-repository
+   ```
+
+2. Install dependencies:
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. Configure the `.env` file:
+   - Update database credentials.
+   - Set up the email server for notifications.
+
+4. Run migrations and seeders:
+   ```bash
+   php artisan migrate --seed
+   ```
+
+5. Start the development server:
+   ```bash
+   php artisan serve
+   ```
+
+The system will be accessible at [http://localhost:8000](http://localhost:8000).
+
+## 🗂️ Additional Documentation
+For more details, refer to:
+- **Use Cases**: Complete documentation on user flows and available functionalities.
+- **Meeting Minutes**: Record of meetings and key decisions during development.
+- **Development Plan**: Description of the technology stack and justification for its selection.
+
+## 🧩 Considerations and Future Enhancements
+- **Security Implementation**: Add two-factor authentication (2FA) to enhance account security.
+- **Performance Optimization**: Improve the efficiency of database queries and optimize the frontend for faster load times.
+- **External API Integration**: Enable integration with popular calendar systems like Google Calendar.
+
+## 📄 License
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
+
+---
+
+This README provides a comprehensive overview of your project. If you need further adjustments or additional details, please let me know!
